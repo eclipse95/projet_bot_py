@@ -20,7 +20,7 @@ __version__='0.1'
 import logging
 # pour faire de l'introspection
 import inspect
-
+from uuid import uuid4 #import la library uuid qui permet de générer une adresse unique
 
 def register_pooo(uid):
     """Inscrit un joueur et initialise le robot pour la compétition
@@ -33,6 +33,8 @@ def register_pooo(uid):
         "0947e717-02a1-4d83-9470-a941b6e8ed07"
 
     """
+    uid = uuid4() #création d'une adresse uid aléatoire
+    
     pass
 
 
