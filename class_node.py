@@ -6,7 +6,12 @@ class node():
         self.offsize=offsize
         self.defsize=defsize
         self.prod=prod
-    def update(self,owner,offsize,defsize):
+        self.neighbor=[]
+
+    def update(self,owner,offsize,defsize):         #mise à jour du noeud
         self.owner=owner
         self.offsize=offsize
         self.defsize=defsize
+
+    def addneighbor(self,int_value):                #ajoute le numéro des voisins aux noeuds
+        self.neighbor.append(int_value)
