@@ -10,3 +10,7 @@ class plateau():
 
     def add_node(self,node):                #methode pour ajouter un noeud (inutile normalement)
         self.liste_node.append(node)
+
+    def define_dico(self,int_node1,int_node2):                  #methode pour inserer les aretes
+        self.dico_aretes={}
+        self.dico_aretes[int_node1]=int_node2
