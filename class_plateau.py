@@ -39,4 +39,9 @@ def init_parser(chain):  # parser pas propre
 
 
 def parser_init_clean(chain):
-    search('TO(\d)\[(\d)\];(\d);(\d)CELLS:',chain)
+    res=search('TO(\d)\[(\d)\];(\d);(\d)CELLS:',chain)
+    nb_player=res.group(1)
+    flag=res.group(2)
+    speed=res.group(3)
+    nb_noeud=res.group(4)
+    print(nb_player,flag,speed,nb_noeud)
