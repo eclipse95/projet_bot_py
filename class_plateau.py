@@ -56,4 +56,4 @@ def parser_init(chain):
         defsize=int(res1[i][5])
         prod=(res1[i][6])
         ls_node.append(node(id,0,radius,[xpos,ypos],offsize,defsize,prod))
-    return nb_player,nb_node,ls_node,flag,speed
+    return nb_player, nb_node, ls_node, flag, speed         #problème de retour
