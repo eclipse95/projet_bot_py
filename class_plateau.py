@@ -21,6 +21,11 @@ class plateau():
     def update_uid(self,uid):                     # mise à jour uid
         self.uid=uid
 
+    def display(self):                            # méthode d'affichage non terminée
+        print('uid: ',self.uid,'; flag: ',self.flag)
+        for i in range (len(self.liste_node)):
+            self.liste_node[i].display()
+
 def parser_init_header(chain):               #parser regex
     res=search('TO(\d)\[(\d)\];(\d);(\d)CELLS:',chain)
     nb_player=res.group(1)
@@ -36,20 +41,19 @@ def parser_init_node(chain):
 
 def parser_init(chain):
     res=search('TO(\d)\[(\d)\];(\d);(\d)CELLS:',chain)
-    nb_player=res.group(1)
-    flag=res.group(2)
-    speed=res.group(3)
-    nb_node=res.group(4)
-    res=findall("(\d*?)\((\d*?)\,(\d*?)\)'(\d*?)'(\d*?)'(\d)'(\w*)",chain)
+    nb_player=int(res.group(1))
+    flag=int(res.group(2))
+    speed=int(res.group(3))
+    nb_node=int(res.group(4))
+    res1=findall("(\d*?)\((\d*?)\,(\d*?)\)'(\d*?)'(\d*?)'(\d)'(\w*)",chain)
     ls_node=[]
-
     for i in range (nb_node):
-        id=res.group(1+7*i)
-        xpos=res.group(2+7*i)
-        ypos=res.group(3+7*i)
-        radius=res.group(4+7*i)
-        offsize=res.group(5+7*i)
-        defsize=res.group(6+7*i)
-        prod=res.group(7+7*i)
+        id=int(res1[i][0])
+        xpos=int(res1[i][1])
+        ypos=int(res1[i][2])
+        radius=int(res1[i][3])
+        offsize=int(res1[i][4])
+        defsize=int(res1[i][5])
+        prod=(res1[i][6])
         ls_node.append(node(id,0,radius,[xpos,ypos],offsize,defsize,prod))
     return nb_player,nb_node,ls_node,flag,speed
