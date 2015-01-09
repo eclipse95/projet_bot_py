@@ -25,4 +25,3 @@ class plateau():
         print('uid: ',self.uid,'; flag: ',self.flag)
         for i in range (len(self.liste_node)):
             self.liste_node[i].display()
-
