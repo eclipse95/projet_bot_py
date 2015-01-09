@@ -21,6 +21,8 @@ def parser_init(chain):
     speed=int(res.group(3))
     nb_node=int(res.group(4))
     res1=findall("(\d*?)\((\d*?)\,(\d*?)\)'(\d*?)'(\d*?)'(\d)'(\w*)",chain)
+    nb_aretes=int(search(";(\d)LINES:",chain).group(0))
+    res=findall("(\d)@(\d+)OF(\d)",chain)
     ls_node=[]
     for i in range (nb_node):
         id=int(res1[i][0])
@@ -30,11 +32,12 @@ def parser_init(chain):
         offsize=int(res1[i][4])
         defsize=int(res1[i][5])
         prod=(res1[i][6])
-        ls_node.append(node(id,0,radius,[xpos,ypos],offsize,defsize,prod))
+        ls_aretes=[]
+        for j in range(nb_aretes):
+            if(id==res[j][0]):
+                ls_aretes.append(res[j][2],res[j][1])
+        ls_node.append(node(id,0,radius,[xpos,ypos],offsize,defsize,prod,ls_aretes))
     return nb_player, nb_node, ls_node, flag, speed         #problème de retour
 
-def parser_lines(chain):
-    pass
-
 def parser_state(chain):
-    pass
+    
