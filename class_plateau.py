@@ -1,5 +1,4 @@
 from class_node import *
-from re import *
 
 class plateau():
     def __init__(self, uid=0,nb_player=2 ,nb_node=2, ls_node=[], flag=0,speed=1,matchid=0):
@@ -25,5 +24,3 @@ class plateau():
         print('uid: ',self.uid,'; flag: ',self.flag)
         for i in range (len(self.liste_node)):
             self.liste_node[i].display()
-
-
