@@ -1,6 +1,8 @@
 from re import *                            # lib regex
 from class_node import *
 
+####### Module contenant les parsers #########
+
 def parser_init_header(chain):               #parser regex (obsolète)
     res=search('TO(\d)\[(\d)\];(\d);(\d)CELLS:',chain)
     nb_player=res.group(1)
@@ -13,6 +15,7 @@ def parser_init_header(chain):               #parser regex (obsolète)
 def parser_init_node(chain):                #parser obsolète
     res=findall("(\d*?)\((\d*?)\,(\d*?)\)'(\d*?)'(\d*?)'(\d)'(\w*)",chain)
     print(res)
+
 
 def parser_init(chain):                     # parser chaine init
     res=search('INIT(.+)TO(\d)\[(\d)\];(\d);(\d)CELLS:',chain)  #parse parametres match
@@ -64,6 +67,7 @@ def lire_state(string):
     print("identifiant: ", identifiant)
     print("les cellules:", cells)
     print("les mouvements:",moves)
+
 
 def parser_state(chain,board):
     #STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3[1]33'6;4MOVES:1<5[2]@232'>6[2]@488'>3[1]@4330'2,1<10[1]@2241'3
