@@ -1,7 +1,7 @@
 from class_node import *
 
 class plateau():
-    def __init__(self, uid=0,nb_player=2 ,nb_node=2, ls_node=[], flag=0,speed=1,matchid=0):
+    def __init__(self, uid=-1,nb_player=-1 ,nb_node=-1, ls_node=[], flag=-1,speed=1,matchid=0):
         self.uid = uid                  # UID du bot
         self.flag = flag                # couleur joueur
         self.matchid=matchid
@@ -24,3 +24,6 @@ class plateau():
         print('uid: ',self.uid,'; flag: ',self.flag)
         for i in range (len(self.liste_node)):
             self.liste_node[i].display()
+
+    def set_uid(self,uid):
+        self.uid=uid
