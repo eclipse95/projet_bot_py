@@ -13,7 +13,7 @@ def parser_init(chain):                     # parser chaine init
     nb_node=int(res.group(5))
     res1=findall("(\d*?)\((\d*?)\,(\d*?)\)'(\d*?)'(\d*?)'(\d)'(\w*)",chain)     #parse les noeuds
     nb_aretes=int(search(";(\d)LINES:",chain).group(0))
-    res=findall("(\d)@(\d+)OF(\d)",chain)           #parse les aretes
+    res=findall("(\d+)@(\d+)OF(\d+)",chain)           #parse les aretes (n° noeud, distance, n° noeud suivant)
     ls_node=[]
     for i in range (nb_node):                       #assemblage des noeuds
         id=int(res1[i][0])
@@ -25,18 +25,20 @@ def parser_init(chain):                     # parser chaine init
         prod=(res1[i][6])
         ls_aretes=[]
         for j in range(nb_aretes):
-            if id==res[j][0]:
+            if id==res[j][0]:                   # A->B
                 ls_aretes.append([res[j][2],res[j][1]])
+            elif id==res[j][2]:                 # B->A
+                ls_aretes.append([res[j][0],res[j][1]])
         ls_node.append(node(id,0,radius,[xpos,ypos],offsize,defsize,prod,ls_aretes))    #liste de noeud
     return matchid, nb_player, nb_node, ls_node, flag, speed         #retourne une liste
 
 def lire_state(string):
-    regex = re.compile('STATE.+;\dCELLS')
-    regex2 = re.compile('\d+CELLS.+MOVES')
-    regex3 = re.compile('\d+MOVES.+')
-    regex4 = re.compile('.+;')                              #regex4 est inutilisé
-    regex5 = re.compile('(\d+\W+\d+\W+\d+\W+\d+)+')
-    regex6 = re.compile("(\d*[<>]\d+\[\d+\]@\d+'\d*)")
+    regex = compile('STATE.+;\dCELLS')
+    regex2 = compile('\d+CELLS.+MOVES')
+    regex3 = compile('\d+MOVES.+')
+    regex4 = compile('.+;')                              #regex4 est inutilisé
+    regex5 = compile('(\d+\W+\d+\W+\d+\W+\d+)+')
+    regex6 = compile("(\d*[<>]\d+\[\d+\]@\d+'\d*)")
     #1er filtrage
     identifiant = regex.search(string).group(0)
     identifiant = identifiant[5:len(identifiant)-7]
