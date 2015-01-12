@@ -8,14 +8,14 @@ class node():
         self.defsize=defsize            #unité def
         self.prod_def=prod_def          #
         self.prod_off=prod_off
-        self.neighbor=ls_neighbor                #liste des noueds voisins
+        self.neighbor=ls_neighbor       #liste des noueds voisins
 
     def update(self,owner,offsize,defsize):         #mise à jour du noeud
         self.owner=owner                #n° joueur
         self.offsize=offsize            #unité off
         self.defsize=defsize            #unité def
 
-    def addneighbor(self,int_value,dist):                #ajoute le numéro des voisins aux noeuds
+    def addneighbor(self,int_value,dist):            #ajoute le numéro des voisins aux noeuds
         self.neighbor.append([int_value,dist])
 
     def display(self):                  #fonction affichage (non finie)
