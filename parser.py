@@ -4,7 +4,7 @@ from class_node import *
 ####### Module contenant les parsers #########
 
 
-def parser_init(chain):                     # parser chaine init
+def parser_init(chain):                     # parser chaine init #passer la board en paramètre?
     res=search('INIT(.+)TO(\d)\[(\d)\];(\d);(\d)CELLS:',chain)  #parse parametres match
     matchid=str(res.group(1))
     nb_player=int(res.group(2))
