@@ -8,7 +8,7 @@ class plateau():
         self.nb_node=nb_node            # nb de noeud
         self.liste_node = ls_node       # liste contenant les noeuds
         self.nb_player=nb_player        # nb de joueur
-        self.dico_aretes = dict()       #dico pour stocker les arretes
+        #self.dico_aretes = dict()       #dico pour stocker les arretes
         self.speed=speed                # vitesse
 
     def set_settings (self,nb_player ,nb_node, ls_node, flag,speed,matchid):

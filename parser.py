@@ -30,7 +30,7 @@ def parser_init(chain):                     # parser chaine init #passer la boar
             elif id==res[j][2]:                 # B->A
                 ls_aretes.append([res[j][0],res[j][1]])
         ls_node.append(node(id,0,radius,[xpos,ypos],offsize,defsize,prod,ls_aretes))    #liste de noeud
-    return matchid, nb_player, nb_node, ls_node, flag, speed         #retourne une liste
+    return nb_player, nb_node, ls_node, flag, speed,matchid         #retourne une liste
 
 def lire_state(string):
     regex = compile('STATE.+;\dCELLS')
@@ -62,4 +62,5 @@ def parser_state(chain,board):
     #STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3[1]33'6;4MOVES:1<5[2]@232'>6[2]@488'>3[1]@4330'2,1<10[1]@2241'3
     if str(search('STATE(.+)IS\d;\dCELLS',chain).group(0))==str(board.matchid):    #verifie le match ID
         cells=findall("(\d+)\[(\d+)\](\d)'(\d)",chain)
+        moves=findall("",chain)
 
