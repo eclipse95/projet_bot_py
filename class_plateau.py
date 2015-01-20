@@ -22,7 +22,7 @@ class plateau():
     def add_node(self, node):           # methode pour ajouter un noeud (inutile normalement)
         self.liste_node.append(node)
 
-    def define_dico(self, int_node1, int_node2):  # methode pour inserer les aretes
+    def define_dico(self, int_node1, int_node2):  # methode pour inserer les aretes #inutiliser
         self.dico_aretes = {}
         self.dico_aretes[int_node1] = int_node2
 
@@ -37,4 +37,12 @@ class plateau():
                 self.liste_node[i].display()
 
     def set_uid(self,uid):
-        self.uid=uid
+        self.uid = uid
+
+    def find_node(self,integer):
+        if (integer == self.liste_node[integer].id):      #si les noeuds sont triés
+            return self.liste_node[integer]
+        else:                                             #sinon cherche sequentiellement
+            for i in range (len(self.liste_node)):
+                if(integer == self.liste_node[i].id):
+                    return self.liste_node[i]
