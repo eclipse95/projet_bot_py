@@ -32,6 +32,7 @@ def parser_init(chain):                     # parser chaine init #passer la boar
         ls_node.append(node(id,0,radius,[xpos,ypos],offsize,defsize,prod,ls_aretes))    #liste de noeud
     return nb_player, nb_node, ls_node, flag, speed,matchid         #retourne une liste
 
+
 def lire_state(string):
     regex = compile('STATE.+;\dCELLS')
     regex2 = compile('\d+CELLS.+MOVES')
@@ -70,3 +71,8 @@ def parser_state(chain,board):          #parser state optimisé
             defunit=cells[i][3]
             board.find_node(cellid).update(owner,offunit,defunit)
 
+
+def ordre_builder(uid, offunits, source, target):
+#[<userid>]MOV<%offunits>FROM<cellid>TO<cellid>
+    ordre=str(uid,'MOV<',offunits,">FROM<",source,'>TO<',target,'>')
+    return ordre
