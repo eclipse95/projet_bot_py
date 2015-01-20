@@ -35,10 +35,10 @@ def parser_init(chain):                     # parser chaine init #passer la boar
 def lire_state(string):
     regex = compile('STATE.+;\dCELLS')
     regex2 = compile('\d+CELLS.+MOVES')
-    regex3 = compile('\d+MOVES.+')
-    regex4 = compile('.+;')                              #regex4 est inutilisé
+    regex3 = compile('\d+MOVES.*')
     regex5 = compile('(\d+\W+\d+\W+\d+\W+\d+)+')
     regex6 = compile("(\d*[<>]\d+\[\d+\]@\d+'\d*)")
+    regex7 = compile('\d+')
     #1er filtrage
     identifiant = regex.search(string).group(0)
     identifiant = identifiant[5:len(identifiant)-7]
@@ -49,10 +49,10 @@ def lire_state(string):
     cells = regex5.findall(cells)
     moves = regex6.findall(moves)
     for i in range(len(moves)):
-        if moves[i][0] == '<' or '>':
-            nb = moves[i-1][0]#le nb de la case d'avant: a faire en expression regulieres
-            strr = str(nb) + moves[i]
-            moves[i] = strr
+        if moves[i][0] == '<' or moves[i][0] == '>':
+            pa = regex7.search(moves[i-1]).group(0)
+            moves[i] = pa+moves[i]          
+
     print("identifiant: ", identifiant)
     print("les cellules:", cells)
     print("les mouvements:",moves)
