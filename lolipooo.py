@@ -14,12 +14,14 @@ __version__='0.1'
  
 
 ## chargement de l'interface de communication avec le serveur
-#from poooc import order, state, state_on_update, etime
+from poooc import order, state, state_on_update, etime
 
 # mieux que des print partout
 import logging
 # pour faire de l'introspection
-import inspect
+#import inspect
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 def register_pooo(uid):
@@ -33,7 +35,9 @@ def register_pooo(uid):
         "0947e717-02a1-4d83-9470-a941b6e8ed07"
 
     """
-    pass
+    logging.info('[register_pooo] Bot {} registered'.format(uid))
+    global UID
+    UID=uid
 
 
 def init_pooo(init_string):
@@ -60,7 +64,7 @@ def init_pooo(init_string):
         "INIT20ac18ab-6d18-450e-94af-bee53fdc8fcaTO6[2];1;3CELLS:1(23,9)'2'30'8'I,2(41,55)'1'30'8'II,3(23,103)'1'20'5'I;2LINES:1@3433OF2,1@6502OF3"
         
     """
-    pass
+    logging.info('[init_pooo] Game init: {!r}'.format(init_string))
     
     
     
@@ -68,7 +72,7 @@ def play_pooo():
     """Active le robot-joueur
     
     """
-    logging.info('Entering play_pooo fonction from {} module...'.format(inspect.currentframe().f_back.f_code.co_filename))
+    logging.info('>>> Entering play_pooo function...')
     ### Début stratégie joueur ### 
     # séquence type :
     # (1) récupère l'état initial 
@@ -77,5 +81,16 @@ def play_pooo():
     # (3) while True :
     # (4)     state = state_on_update()    
     # (5)     TODO: traitement de state et transmission d'ordres order(msg)
-    pass
-    
+    while True:
+        msg=state_on_update()
+        if 'STATE' in msg:
+            logging.debug('[play_pooo] Received state: {}'.format(msg))
+        elif 'GAMEOVER' in msg: # on arrête d'envoyer des ordres. On observe seulement...
+            order ('[{}]GAMEOVEROK'.format(UID))
+            logging.debug('[play_pooo] Received game over: {}'.format(msg))
+        elif 'ENDOFGAME' in msg: # on sort de la boucle de jeu
+            logging.debug('[play_pooo] Received end of game: {}'.format(msg))
+            break
+        else:
+            logging.error('[play_pooo] Unknown msg: {!r}'.format(msg))
+    logging.info('>>> Exit play_pooo function')

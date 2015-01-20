@@ -58,9 +58,9 @@ def lire_state(string):
     print("les mouvements:",moves)
 
 
-def parser_state(chain,board):
+def parser_state(chain,board):          #parser state optimisé
     #STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3[1]33'6;4MOVES:1<5[2]@232'>6[2]@488'>3[1]@4330'2,1<10[1]@2241'3
-    if str(search('STATE(.+)IS\d;\dCELLS',chain).group(0))==str(board.matchid):    #verifie le match ID
+    if str(search('STATE(.+)IS\d;\dCELLS',chain).group(0))==str(board.matchid):    #verifie le match ID #inutile ?
         cells=findall("(\d+)\[(\d+)\](\d)'(\d)",chain)
         #moves=findall("(\d+)[<>](\d+)\[(\d+)\]@(\d+)'",chain)      #desactiver car on ne gere pas encore les mouvmnts
         for i in range (len(cells)):
