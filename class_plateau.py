@@ -36,8 +36,10 @@ class plateau():
             for i in range (len(self.liste_node)):
                 self.liste_node[i].display()
 
+
     def set_uid(self,uid):
         self.uid = uid
+
 
     def find_node(self,integer):
         if (integer == self.liste_node[integer].id):      #si les noeuds sont triés

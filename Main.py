@@ -1,9 +1,8 @@
 __author__ = 'E149248B'
 #----------LIBS----------
 from class_plateau import *
-from parser import *
 from poooc import order, state, state_on_update, etime
-
+import parser
 import inspect
 import logging
 
@@ -19,9 +18,10 @@ def register_pooo(uid):
 
 def init_pooo(init_string):
     logging.info('[init_pooo] Game init: {!r}'.format(init_string))
-    tmp=parser_init(init_string)
+    tmp=parser.parser_init(str(init_string))
     print(tmp)
     board.set_settings(tmp[0],tmp[1],tmp[2],tmp[3],tmp[4],tmp[5])
+    board.display('all')
     pass
 
 def play_pooo():

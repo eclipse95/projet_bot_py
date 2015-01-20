@@ -65,14 +65,16 @@ def parser_state(chain,board):          #parser state optimisé
         cells=findall("(\d+)\[(\d+)\](\d)'(\d)",chain)
         #moves=findall("(\d+)[<>](\d+)\[(\d+)\]@(\d+)'",chain)      #desactiver car on ne gere pas encore les mouvmnts
         for i in range (len(cells)):
-            cellid=cells[i][0]
-            owner=cells[i][1]
-            offunit=cells[i][2]
-            defunit=cells[i][3]
+            cellid=int(cells[i][0])
+            owner=int(cells[i][1])
+            offunit=int(cells[i][2])
+            defunit=int(cells[i][3])
             board.find_node(cellid).update(owner,offunit,defunit)
 
 
 def ordre_builder(uid, offunits, source, target):
 #[<userid>]MOV<%offunits>FROM<cellid>TO<cellid>
-    ordre=str(uid,'MOV<',offunits,">FROM<",source,'>TO<',target,'>')
+    ordre=str(uid,'MOV<',offunits)
+    ordre+=str(">FROM<",source,'>TO<')
+    ordre+=str(target,'>')
     return ordre
