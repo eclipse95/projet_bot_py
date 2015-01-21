@@ -15,8 +15,11 @@ class node():
         self.offsize=offsize            #unité off
         self.defsize=defsize            #unité def
 
-    def addneighbor(self,int_value,dist):            #ajoute le numéro des voisins aux noeuds
-        self.neighbor.append([int_value,dist])
+#    def addneighbor(self,int_value,dist):            #ajoute le numéro des voisins aux noeuds
+#        self.neighbor.append([int_value,dist])
+
+    def addneighbor(self,int_value):            #ajoute le numéro des voisins aux noeuds
+        self.neighbor.append([int_value])
 
     def display(self):                  #fonction affichage (non finie)
         print('id:', self.id, 'propriétaire:', self.owner, 'position:', self.pos, 'off:',self. offsize)

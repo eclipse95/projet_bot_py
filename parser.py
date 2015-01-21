@@ -12,7 +12,7 @@ def parser_init(chain):                     # parser chaine init #passer la boar
     speed=int(res.group(4))
     nb_node=int(res.group(5))
     res1=findall("(\d*?)\((\d*?)\,(\d*?)\)'(\d*?)'(\d*?)'(\d)'(\w*)",chain)     #parse les noeuds
-    nb_aretes=int(search(";(\d)LINES:",chain).group(0))
+    nb_aretes=int(search(";(\d)LINES:",chain).group(1))
     res=findall("(\d+)@(\d+)OF(\d+)",chain)           #parse les aretes (n° noeud, distance, n° noeud suivant)
     ls_node=[]
     for i in range (nb_node):                       #assemblage des noeuds
@@ -26,9 +26,11 @@ def parser_init(chain):                     # parser chaine init #passer la boar
         ls_aretes=[]
         for j in range(nb_aretes):
             if id==res[j][0]:                   # A->B
-                ls_aretes.append([res[j][2],res[j][1]])
+#                ls_aretes.append([res[j][2],res[j][1]])
+                ls_aretes.append(res[j][2])         #pas de gestion des distances
             elif id==res[j][2]:                 # B->A
-                ls_aretes.append([res[j][0],res[j][1]])
+#                ls_aretes.append([res[j][0],res[j][1]])
+                ls_aretes.append(res[j][0])
         ls_node.append(node(id,0,radius,[xpos,ypos],offsize,defsize,prod,ls_aretes))    #liste de noeud
     return nb_player, nb_node, ls_node, flag, speed,matchid         #retourne une liste
 
