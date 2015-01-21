@@ -5,6 +5,7 @@ from poooc import order, state, state_on_update, etime
 import parser
 import inspect
 import logging
+import AI
 
 global plateau              #les variables globales, ça craint
 board=plateau()                  #variable plateau
@@ -31,6 +32,8 @@ def play_pooo():
         msg=state_on_update()
         if 'STATE' in msg:
             logging.debug('[play_pooo] Received state: {}'.format(msg))
+            parser.parser_state(msg,board)
+            AI.strategy_level1(board)
         elif 'GAMEOVER' in msg: # on arrête d'envoyer des ordres. On observe seulement...
             order ('[{}]GAMEOVEROK'.format(UID))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))

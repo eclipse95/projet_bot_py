@@ -1,5 +1,5 @@
 class node():
-    def __init__(self,id=0,owner=0,radius=None,pos=[],offsize=None,defsize=None,prod_def=1,prod_off=1,ls_neighbor=None):
+    def __init__(self, id=0, owner=0, radius=None, pos=[], offsize=None, defsize=None, prod_def=1, prod_off=1, ls_neighbor=None):
         self.id=id
         self.owner=owner                #n° du joueur
         self.radius=radius              #rayon du noeud
@@ -19,4 +19,4 @@ class node():
         self.neighbor.append([int_value,dist])
 
     def display(self):                  #fonction affichage (non finie)
-        print('id:',self.id,'propriétaire:',self.owner,'position:',self.pos,'off:',self.offsize)
+        print('id:', self.id, 'propriétaire:', self.owner, 'position:', self.pos, 'off:',self. offsize)
