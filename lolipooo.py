@@ -37,7 +37,7 @@ def register_pooo(uid):
     """
     logging.info('[register_pooo] Bot {} registered'.format(uid))
     global UID
-    UID=uid
+    UID = uid
 
 
 def init_pooo(init_string):
@@ -67,7 +67,6 @@ def init_pooo(init_string):
     logging.info('[init_pooo] Game init: {!r}'.format(init_string))
     
     
-    
 def play_pooo():
     """Active le robot-joueur
     
@@ -82,13 +81,13 @@ def play_pooo():
     # (4)     state = state_on_update()    
     # (5)     TODO: traitement de state et transmission d'ordres order(msg)
     while True:
-        msg=state_on_update()
+        msg = state_on_update()
         if 'STATE' in msg:
             logging.debug('[play_pooo] Received state: {}'.format(msg))
-        elif 'GAMEOVER' in msg: # on arrête d'envoyer des ordres. On observe seulement...
+        elif 'GAMEOVER' in msg:     # on arrête d'envoyer des ordres. On observe seulement...
             order ('[{}]GAMEOVEROK'.format(UID))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))
-        elif 'ENDOFGAME' in msg: # on sort de la boucle de jeu
+        elif 'ENDOFGAME' in msg:    # on sort de la boucle de jeu
             logging.debug('[play_pooo] Received end of game: {}'.format(msg))
             break
         else:

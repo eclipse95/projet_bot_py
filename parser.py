@@ -5,33 +5,33 @@ from class_node import *
 
 
 def parser_init(chain, board):                     # parser chaine init #passer la board en paramètre?
-    res=search('INIT(.+)TO(\d)\[(\d)\];(\d);(\d)CELLS:',chain)  #parse parametres match
-    board.matchid=str(res.group(1))
-    board.nb_player=int(res.group(2))
-    board.flag=int(res.group(3))
-    board.speed=int(res.group(4))
-    board.nb_node=int(res.group(5))
-    res1=findall("(\d*?)\((\d*?)\,(\d*?)\)'(\d*?)'(\d*?)'(\d)'(\w*)",chain)     #parse les noeuds
-    nb_aretes=int(search(";(\d)LINES:",chain).group(1))
-    res=findall("(\d+)@(\d+)OF(\d+)",chain)           #parse les aretes (n° noeud, distance, n° noeud suivant)
-    board.liste_node=[]
+    res=search('INIT(.+)TO(\d)\[(\d)\];(\d);(\d)CELLS:', chain)  #parse parametres match
+    board.matchid = str(res.group(1))
+    board.nb_player = int(res.group(2))
+    board.flag = int(res.group(3))
+    board.speed = int(res.group(4))
+    board.nb_node = int(res.group(5))
+    res1 = findall("(\d*?)\((\d*?),(\d*?)\)'(\d*?)'(\d*?)'(\d)'(\w*)", chain)     #parse les noeuds
+    nb_aretes = int(search(";(\d)LINES:", chain).group(1))
+    res = findall("(\d+)@(\d+)OF(\d+)", chain)           #parse les aretes (n° noeud, distance, n° noeud suivant)
+    board.liste_node = []
     for i in range (board.nb_node):                       #assemblage des noeuds
-        id=int(res1[i][0])
-        xpos=int(res1[i][1])
-        ypos=int(res1[i][2])
-        radius=int(res1[i][3])
-        offsize=int(res1[i][4])
-        defsize=int(res1[i][5])
-        prod=(res1[i][6])
-        ls_aretes=[]
+        id = int(res1[i][0])
+        xpos = int(res1[i][1])
+        ypos = int(res1[i][2])
+        radius = int(res1[i][3])
+        offsize = int(res1[i][4])
+        defsize = int(res1[i][5])
+        prod = (res1[i][6])
+        ls_aretes = []
         for j in range(nb_aretes):
-            if id==res[j][0]:                   # A->B
+            if id == res[j][0]:                   # A->B
 #                ls_aretes.append([res[j][2],res[j][1]])
                 ls_aretes.append(res[j][2])         #pas de gestion des distances
-            elif id==res[j][2]:                 # B->A
+            elif id == res[j][2]:                 # B->A
 #                ls_aretes.append([res[j][0],res[j][1]])
                 ls_aretes.append(res[j][0])
-        board.liste_node.append(node(id,0,radius,[xpos,ypos],offsize,defsize,prod,ls_aretes))    #liste de noeud
+        board.liste_node.append(node(id, 0, radius, [xpos,ypos], offsize, defsize, prod, ls_aretes))    #liste de noeud
     return board         #retourne la board #inutile?
 
 
@@ -61,15 +61,15 @@ def lire_state(string):
     print("les mouvements:",moves)
 
 
-def parser_state(chain,board):          #parser state optimisé
+def parser_state(chain, board):          #parser state optimisé
     #STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3[1]33'6;4MOVES:1<5[2]@232'>6[2]@488'>3[1]@4330'2,1<10[1]@2241'3
-    if str(search('STATE(.+)IS\d;\dCELLS',chain).group(0))==str(board.matchid):    #verifie le match ID #inutile ?
-        cells=findall("(\d+)\[(\d+)\](\d)'(\d)",chain)
-        #moves=findall("(\d+)[<>](\d+)\[(\d+)\]@(\d+)'",chain)      #desactiver car on ne gere pas encore les mouvmnts
+    if str(search('STATE(.+)IS\d;\dCELLS', chain).group(0))==str(board.matchid):    #verifie le match ID #inutile ?
+        cells = findall("(\d+)\[(\d+)\](\d)'(\d)", chain)
+        #moves = findall("(\d+)[<>](\d+)\[(\d+)\]@(\d+)'", chain)      #desactiver car on ne gere pas encore les mouvmnts
         for i in range (len(cells)):
-            cellid=int(cells[i][0])
-            owner=int(cells[i][1])
-            offunit=int(cells[i][2])
-            defunit=int(cells[i][3])
-            board.find_node(cellid).update(owner,offunit,defunit)
+            cellid = int(cells[i][0])
+            owner = int(cells[i][1])
+            offunit = int(cells[i][2])
+            defunit = int(cells[i][3])
+            board.find_node(cellid).update(owner, offunit, defunit)
     return board
