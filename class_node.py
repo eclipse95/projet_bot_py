@@ -19,7 +19,7 @@ class node():
 #        self.neighbor.append([int_value,dist])
 
     def addneighbor(self,int_value):            #ajoute le numéro des voisins aux noeuds
-        self.neighbor.append([int_value])
+        self.neighbor.append(int_value)
 
     def display(self):                  #fonction affichage (non finie)
         print('id:', self.id, 'propriétaire:', self.owner, 'position:', self.pos, 'off:',self. offsize)
