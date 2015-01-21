@@ -18,11 +18,9 @@ def register_pooo(uid):
     pass
 
 def init_pooo(init_string):
-    logging.info('[init_pooo] Game init: {!r}'.format(init_string))
-    tmp=parser.parser_init(str(init_string))
-    print(tmp)
-    board.set_settings(tmp[0],tmp[1],tmp[2],tmp[3],tmp[4],tmp[5])
-    board.display('all')
+    #logging.info('[init_pooo] Game init: {!r}'.format(init_string))
+    parser.parser_init(str(init_string),board)
+    board.display()
     pass
 
 def play_pooo():

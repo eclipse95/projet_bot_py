@@ -29,12 +29,10 @@ class plateau():
     def update_uid(self,uid):                     # mise à jour uid
         self.uid=uid
 
-    def display(self,chain_mode='all'):           # méthode d'affichage
-        if chain_mode==('setting' or 'all'):
-            print('uid: ',self.uid,'; match ID: ',self.matchid,'; flag: ',self.flag,'; vitesse:',self.speed)
-        if chain_mode==('node' or 'all'):
-            for i in range (len(self.liste_node)):
-                self.liste_node[i].display()
+    def display(self):           # méthode d'affichage
+        print('uid: ',self.uid,'; match ID: ',self.matchid,'; flag: ',self.flag,'; vitesse:',self.speed)
+        for i in range (len(self.liste_node)):
+            self.liste_node[i].display()
 
 
     def set_uid(self,uid):
