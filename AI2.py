@@ -60,10 +60,11 @@ def play_pooo():
                             cible = cible_2         # la cible 2 devient la cible
 
                     if  troupe_a_envoyer_min < source.offsize :     #Teste si on peut attaquer
-                        #order = parametre_move(board.uid,100,liste_node_allie[a],cible)
+                        ordre = parametre_move(board.uid,100,source.id,cible.id) # il faut créer la chaine car order ne prendre que cette chaine de la forme "[0947e717-02a1-4d83-9470-a941b6e8ed07]MOV33FROM1TO4"
+                        #[<userid>]MOV<%offunits>FROM<cellid>TO<cellid> faut importer j'ai l'ai créer
                         #crée l'ordre d'attaque
-                        #poooc.order(order)
-                        order(board.uid,100,source.id,cible.id)
+                        poooc.order(ordre)
+                        #order(board.uid,100,source.id,cible.id)
                         #A l'ATTAQUE
 
             logging.info('============  {}  ============='.format(liste_node_allie))
