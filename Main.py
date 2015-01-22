@@ -41,7 +41,7 @@ def play_pooo():
                     nb_node+=1
                     if board.liste_node[i].offsize > 10:
                         target_id = random.choice(board.liste_node[i].neighbor)
-                        order(board.uid, random.randint(0, 100), board.liste_node[i].id, target_id)
+                        order(parser.ordre_builder(board.uid, random.randint(0, 100), board.liste_node[i].id, target_id))
             logging.info('============ ( {} / {} ) ============='.format(nb_node,board.nb_node))
 
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...

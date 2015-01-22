@@ -6,7 +6,7 @@ from class_plateau import *
 import parser
 import inspect
 import logging
-
+from order import *
 
 
 global plateau              #les variables globales, ça craint
@@ -44,14 +44,14 @@ def play_pooo():
                         current_node = board.find_node(j)
                         if current_node.owner != board.flag:    # si un de ces voisins est un ennemi
                             if board.liste_node[i].offsize > current_node.offsize + current_node.defsize:
-                                order(board.uid, 100, board.liste_node[i].id, current_node.id)
+                                order(parametre_move(board.uid, 100, board.liste_node[i].id, current_node.id))
                             elif board.liste_node[i].offsize > 29:
-                                order(board.uid, 100, board.liste_node[i].id, current_node.id)
+                                order(parametre_move(board.uid, 100, board.liste_node[i].id, current_node.id))
                         elif current_node.owner == board.flag:  #si ces voisins sont alliés
                             for k in current_node.neighbor:
                                 current_node_k = board.find_node(k)
                                 if current_node_k.owner != board.flag:  #si un des voisins est ennemi
-                                    order(board.uid, 100, board.liste_node[i].id, current_node_k.id)
+                                    order(parametre_move(board.uid, 100, board.liste_node[i].id, current_node_k.id))
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode,board.nb_node))
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order ('[{}]GAMEOVEROK'.format(UID))

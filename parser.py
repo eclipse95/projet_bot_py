@@ -25,12 +25,12 @@ def parser_init(chain, board):                     # parser chaine init #passer 
         prod = (res1[i][6])
         ls_aretes = []
         for j in range(nb_aretes):
-            if id == res[j][0]:                   # A->B
+            if id == int(res[j][0]):                   # A->B
 #                ls_aretes.append([res[j][2],res[j][1]])
-                ls_aretes.append(res[j][2])         #pas de gestion des distances
-            elif id == res[j][2]:                 # B->A
+                ls_aretes.append(int(res[j][2]))         #pas de gestion des distances
+            elif id == int(res[j][2]):                 # B->A
 #                ls_aretes.append([res[j][0],res[j][1]])
-                ls_aretes.append(res[j][0])
+                ls_aretes.append(int(res[j][0]))
         board.liste_node.append(node(id, 0, radius, [xpos,ypos], offsize, defsize, prod, ls_aretes))    #liste de noeud
     return board         #retourne la board #inutile?
 
@@ -73,3 +73,10 @@ def parser_state(chain, board):          #parser state optimisé
             defunit = int(cells[i][3])
             board.find_node(cellid).update(owner, offunit, defunit)
     return board
+
+def ordre_builder(uid, offunits, source, target):
+#[<userid>]MOV<%offunits>FROM<cellid>TO<cellid>
+    ordre=str(uid,'MOV<',offunits)
+    ordre+=str(">FROM<",source,'>TO<')
+    ordre+=str(target,'>')
+    return ordre
