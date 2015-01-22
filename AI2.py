@@ -44,20 +44,21 @@ def play_pooo():
                     liste_node_neutre.append(board.liste_node[i].id)
                 else:
                     liste_node_ennemi.append(board.liste_node[i].id)
-            for a in range (len(liste_node_allie)):   # Parcours des cellules alliées
-                source=board.find_node(a)
-                if source.neighbor not in liste_node_ennemi and source.neighbor in liste_node_neutre :       #Si les voisins sont neutres (ou allié)
-                    cible = board.find_node(source.neighbor[0])
+            for a in range (len(liste_node_allie)):     # Parcours des cellules alliées
+                source=board.find_node(a)               # Copie l'addresse memoire dans source # source est de "type Node"
+                if source.neighbor not in liste_node_ennemi and source.neighbor in liste_node_neutre :
+                #Si les voisins sont neutres (ou allié) #Je ne suis pas sûr que ça marche tel quel
+                    cible = board.find_node(source.neighbor[0]) #cible est de type node
                     troupe_a_envoyer_min = (cible.defsize+cible.offsize+1)
                     #Nbre de vaisseaux à envoyé pour prendre la planète
                     for b in range(len(source.neighbor)) :
                     #On parcourt les voisins neutres
-                        cible_2 = board.find_node(source.neighbor[b])
+                        cible_2 = board.find_node(source.neighbor[b])       # 2e cible pour comparer avec cible
                         troupe_a_envoyer = (cible_2.defsize+cible_2.offsize+1)
                         if troupe_a_envoyer < troupe_a_envoyer_min :
                             troupe_a_envoyer_min = troupe_a_envoyer
-                            cible = cible_2
-    
+                            cible = cible_2         # la cible 2 devient la cible
+
                     if  troupe_a_envoyer_min < source.offsize :     #Teste si on peut attaquer
                         #order = parametre_move(board.uid,100,liste_node_allie[a],cible)
                         #crée l'ordre d'attaque
