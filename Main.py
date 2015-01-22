@@ -35,6 +35,7 @@ def play_pooo():
         if 'STATE' in msg:
             logging.debug('[play_pooo] Received state: {}'.format(msg))
             parser.parser_state(msg,board)
+            board.display()
             nb_node=0
             for i in range (board.nb_node):
                 if board.liste_node[i].owner == board.flag:
