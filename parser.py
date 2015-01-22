@@ -11,7 +11,7 @@ def parser_init(chain, board):                     # parser chaine init #passer 
     board.flag = int(res.group(3))
     board.speed = int(res.group(4))
     board.nb_node = int(res.group(5))
-    res1 = findall("(\d*?)\((\d*?),(\d*?)\)'(\d*?)'(\d*?)'(\d)'(\w*)", chain)     #parse les noeuds
+    res1 = findall("(\d+)\((\d+),(\d+)\)'(\d+)'(\d+)'(\d+)'(\w*)", chain)     #parse les noeuds
     nb_aretes = int(search(";(\d)LINES:", chain).group(1))
     res = findall("(\d+)@(\d+)OF(\d+)", chain)           #parse les aretes (n° noeud, distance, n° noeud suivant)
     board.liste_node = []
@@ -63,15 +63,15 @@ def lire_state(string):
 
 def parser_state(chain, board):          #parser state optimisé
     #STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3[1]33'6;4MOVES:1<5[2]@232'>6[2]@488'>3[1]@4330'2,1<10[1]@2241'3
-    if str(search('STATE(.+)IS\d;\dCELLS', chain).group(0))==str(board.matchid):    #verifie le match ID #inutile ?
-        cells = findall("(\d+)\[(\d+)\](\d)'(\d)", chain)
-        #moves = findall("(\d+)[<>](\d+)\[(\d+)\]@(\d+)'", chain)      #desactiver car on ne gere pas encore les mouvmnts
-        for i in range (len(cells)):
-            cellid = int(cells[i][0])
-            owner = int(cells[i][1])
-            offunit = int(cells[i][2])
-            defunit = int(cells[i][3])
-            board.find_node(cellid).update(owner, offunit, defunit)
+    #if str(search('STATE(.+)IS\d;\dCELLS', chain).group(0))==str(board.matchid):    #verifie le match ID #inutile ?
+    cells = findall("(\d+)\[(-\d+|\d+)\](\d+)'(\d+)", chain)
+    #moves = findall("(\d+)[<>](\d+)\[(\d+)\]@(\d+)'", chain)      #desactiver car on ne gere pas encore les mouvmnts
+    for i in range (len(cells)):
+        cellid = int(cells[i][0])
+        owner = int(cells[i][1])
+        offunit = int(cells[i][2])
+        defunit = int(cells[i][3])
+        board.find_node(cellid).update(owner, offunit, defunit)
     return board
 
 def ordre_builder(uid, offunits, source, target):
