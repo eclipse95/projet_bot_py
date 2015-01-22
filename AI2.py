@@ -47,6 +47,7 @@ def play_pooo():
             for a in range (len(liste_node_allie)):     # Parcours des cellules alliées
                 source=board.find_node(a)               # Copie l'addresse memoire dans source # source est de "type Node"
                 if source.neighbor not in liste_node_ennemi and source.neighbor in liste_node_neutre :
+                #if check_in(source.neighbor, liste_node_ennemi) == False and check_in(source.neighbor, liste_node_neutre):
                 #Si les voisins sont neutres (ou allié) #Je ne suis pas sûr que ça marche tel quel
                     cible = board.find_node(source.neighbor[0]) #cible est de type node
                     troupe_a_envoyer_min = (cible.defsize+cible.offsize+1)
@@ -60,11 +61,11 @@ def play_pooo():
                             cible = cible_2         # la cible 2 devient la cible
 
                     if  troupe_a_envoyer_min < source.offsize :     #Teste si on peut attaquer
-                        ordre = parametre_move(board.uid,100,source.id,cible.id) # il faut créer la chaine car order ne prendre que cette chaine de la forme "[0947e717-02a1-4d83-9470-a941b6e8ed07]MOV33FROM1TO4"
+                        #ordre = parametre_move(board.uid,100,source.id,cible.id) # il faut créer la chaine car order ne prendre que cette chaine de la forme "[0947e717-02a1-4d83-9470-a941b6e8ed07]MOV33FROM1TO4"
                         #[<userid>]MOV<%offunits>FROM<cellid>TO<cellid> faut importer j'ai l'ai créer
                         #crée l'ordre d'attaque
-                        poooc.order(ordre)
-                        #order(board.uid,100,source.id,cible.id)
+                        #order(ordre)
+                        order(board.uid,100,source.id,cible.id)
                         #A l'ATTAQUE
 
             logging.info('============  {}  ============='.format(liste_node_allie))
@@ -79,3 +80,10 @@ def play_pooo():
             logging.error('[play_pooo] Unknown msg: {!r}'.format(msg))
     logging.info('>>> Exit play_pooo function')
     pass
+
+def check_in(liste1, liste2):
+    for i in range (len(liste1)):
+        for j in range (len(liste2)):
+            if liste1[j] == liste2[i]:
+                return True
+    return False

@@ -4,4 +4,4 @@ def parametre_move(userid,pourcent,planetes_depart,planetes_arrive):
     deplacement = deplacement  + userid + 'MOV' + str((pourcent*planetes_depart.offsize)/100) + 'FROM' + str(planetes_depart.id_node) + 'TO' + str(planetes_arrive.id_node)
     return deplacement
 
-#la fonction order est presente dans la lib poooc
+#la fonction order est déja presente dans la lib poooc
