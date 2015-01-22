@@ -1,11 +1,12 @@
-__author__ = 'E149248B'
+#---------fichier pour stocker l'IA L1
+
 #----------LIBS----------
 from class_plateau import *
 from poooc import order, state, state_on_update, etime
 import parser
 import inspect
 import logging
-import AI
+import random
 
 global plateau              #les variables globales, ça craint
 board = plateau()                  #variable plateau
@@ -34,7 +35,11 @@ def play_pooo():
         if 'STATE' in msg:
             logging.debug('[play_pooo] Received state: {}'.format(msg))
             parser.parser_state(msg,board)
-            AI.strategy_level1(board)
+            for i in range (board.nb_node):
+                if board.liste_node[i].offsize > 10 and board.liste_node[i].owner == board.flag:
+                    target_id = random.choice(board.liste_node[i].neighbor)
+                    order(board.uid, random.randint(0, 100), board.liste_node[i].id, target_id)
+
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order ('[{}]GAMEOVEROK'.format(UID))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))
