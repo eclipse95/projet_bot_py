@@ -36,8 +36,10 @@ def play_pooo():
         if 'STATE' in msg:
             logging.debug('[play_pooo] Received state: {}'.format(msg))
             parser.parser_state(msg,board)
+            nb_mynode=0
             for i in range (int(board.nb_node)):
                 if (board.liste_node[i].owner == board.flag):
+                    nb_mynode+=1
                     for j in  board.liste_node[i].neighbor:
                         current_node = board.find_node(j)
                         if current_node.owner != board.flag:
@@ -50,8 +52,7 @@ def play_pooo():
                                 current_node_k = board.find_node(k)
                                 if current_node_k.owner != board.flag:
                                     order(board.uid, 100, board.liste_node[i].id, current_node_k.id)
-
-
+            logging.info('============ ( {} / {} ) ============='.format(nb_mynode,board.nb_node))
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order ('[{}]GAMEOVEROK'.format(UID))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))
