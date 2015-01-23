@@ -1,12 +1,11 @@
 class node():
-    def __init__(self, id=0, owner=0, radius=None, pos=[], offsize=None, defsize=None, prod_def=1, prod_off=1, ls_neighbor=None):
+    def __init__(self, id=-1, owner=-1, radius=-1, pos=[], offsize=-1, defsize=-1, prod_off=1, ls_neighbor=[]):
         self.id = id
         self.owner = owner                #n° du joueur
         self.radius = radius              #rayon du noeud
         self.pos = pos                    #position
         self.offsize = offsize            #unité off
         self.defsize = defsize            #unité def
-        self.prod_def = prod_def          #
         self.prod_off = prod_off
         self.neighbor = ls_neighbor       #liste des noueds voisins
 
@@ -21,5 +20,6 @@ class node():
     def addneighbor(self, int_value):            #ajoute le numéro des voisins aux noeuds
         self.neighbor.append(int_value)
 
-    def display(self):                  #fonction affichage (non finie)
-        print('id:', self.id, 'propriétaire:', self.owner, 'position:', self.pos, 'off:', self. offsize)
+    def display(self):                  #fonction affichage
+        print('id:', self.id, 'propriétaire:', self.owner, 'position:', self.pos, 'off:', self. offsize, 'def:', self.defsize)
+        print('voisins :',self.neighbor)

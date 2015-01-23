@@ -2,5 +2,6 @@
 - Completer la TODO list
 - Debuguer les IAs
 
-probleme au niveau de la liste des voisins
+problème avec le parser -> résolu, il ne prennait pas en charge les nombres négatifs
+probleme au niveau de la liste des voisins -> resolu, problème avec le constructeur de la classe Node
 probleme au niveau de la transmission des ordes
