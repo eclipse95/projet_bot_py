@@ -46,8 +46,8 @@ def play_pooo():
                     liste_node_ennemi.append(board.liste_node[i].id)
             for a in range(len(liste_node_allie)):     # Parcours des cellules alliées
                 source = board.find_node(a)               # Copie l'addresse memoire dans source # source est de "type Node"
-                if source.neighbor not in liste_node_ennemi and source.neighbor in liste_node_neutre:
-                #if check_in(source.neighbor, liste_node_ennemi) == False and check_in(source.neighbor, liste_node_neutre):
+                #if source.neighbor not in liste_node_ennemi and source.neighbor in liste_node_neutre:
+                if check_in(source.neighbor, liste_node_ennemi) == False and check_in(source.neighbor, liste_node_neutre):
                 #Si les voisins sont neutres (ou allié) #Je ne suis pas sûr que ça marche tel quel
                     cible = board.find_node(source.neighbor[0]) #cible est de type node
                     troupe_a_envoyer_min = cible.defsize + cible.offsize + 1

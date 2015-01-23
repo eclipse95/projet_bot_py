@@ -44,9 +44,9 @@ def play_pooo():
                         current_node = board.find_node(j)
                         if current_node.owner != board.flag:    # si un de ces voisins est un ennemi
                             if board.liste_node[i].offsize > current_node.offsize + current_node.defsize:
-                                order(parametre_move(board.uid, 100, board.liste_node[i].id, current_node.id))
+                                order(parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                             elif board.liste_node[i].offsize > 29:
-                                order(parametre_move(board.uid, 100, board.liste_node[i].id, current_node.id))
+                                order(parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                         elif current_node.owner == board.flag:  #si ces voisins sont alliés
                             for k in current_node.neighbor:
                                 current_node_k = board.find_node(k)
