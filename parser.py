@@ -15,7 +15,7 @@ def parser_init(chain, board):                     # parser chaine init #passer 
     nb_aretes = int(search(";(\d)LINES:", chain).group(1))
     res = findall("(\d+)@(\d+)OF(\d+)", chain)           #parse les aretes (n° noeud, distance, n° noeud suivant)
     board.liste_node = []
-    for i in range (board.nb_node):                       #assemblage des noeuds
+    for i in range(board.nb_node):                       #assemblage des noeuds
         id = int(res1[i][0])
         xpos = int(res1[i][1])
         ypos = int(res1[i][2])
@@ -31,7 +31,7 @@ def parser_init(chain, board):                     # parser chaine init #passer 
             elif id == int(res[j][2]):                 # B->A
 #                ls_aretes.append([res[j][0],res[j][1]])
                 ls_aretes.append(int(res[j][0]))
-        board.liste_node.append(node(id, 0, radius, [xpos,ypos], offsize, defsize, prod, ls_aretes))    #liste de noeud
+        board.liste_node.append(node(id, 0, radius, [xpos, ypos], offsize, defsize, prod, ls_aretes))    #liste de noeud
     return board         #retourne la board #inutile?
 
 
@@ -58,14 +58,14 @@ def lire_state(string):
 
     print("identifiant: ", identifiant)
     print("les cellules:", cells)
-    print("les mouvements:",moves)
+    print("les mouvements:", moves)
 
 
 def parser_state(chain, board):          #parser state optimisé
     #STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3[1]33'6;4MOVES:1<5[2]@232'>6[2]@488'>3[1]@4330'2,1<10[1]@2241'3
     cells = findall("(-\d+|\d+)\[(-\d+|\d+)\](\d+)'(\d+)", chain)
     #moves = findall("(\d+)[<>](\d+)\[(\d+)\]@(\d+)'", chain)      #desactiver car on ne gere pas encore les mouvmnts
-    for i in range (len(cells)):
+    for i in range(len(cells)):
         cellid = int(cells[i][0])
         owner = int(cells[i][1])
         offunit = int(cells[i][2])
@@ -75,7 +75,7 @@ def parser_state(chain, board):          #parser state optimisé
 
 def ordre_builder(uid, offunits, sourceID, targetID):
 #[<userid>]MOV<%offunits>FROM<cellid>TO<cellid>
-    ordre='[' + str(uid) + ']' + 'MOV' + str(offunits)
-    ordre+="FROM" + str(sourceID) + 'TO'
-    ordre+=str(targetID)
+    ordre = '[' + str(uid) + ']' + 'MOV' + str(offunits)
+    ordre += "FROM" + str(sourceID) + 'TO'
+    ordre += str(targetID)
     return ordre

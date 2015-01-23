@@ -22,4 +22,4 @@ class node():
 
     def display(self):                  #fonction affichage
         print('id:', self.id, 'propriétaire:', self.owner, 'position:', self.pos, 'off:', self. offsize, 'def:', self.defsize)
-        print('voisins :',self.neighbor)
+        print('voisins :', self.neighbor)

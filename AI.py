@@ -23,7 +23,7 @@ def register_pooo(uid):
 
 def init_pooo(init_string):
     #logging.info('[init_pooo] Game init: {!r}'.format(init_string))
-    parser.parser_init(str(init_string),board)
+    parser.parser_init(str(init_string), board)
     board.display()
     pass
 
@@ -35,9 +35,9 @@ def play_pooo():
         msg = state_on_update()
         if 'STATE' in msg:
             logging.debug('[play_pooo] Received state: {}'.format(msg))
-            parser.parser_state(msg,board)
+            parser.parser_state(msg, board)
             nb_mynode=0
-            for i in range (int(board.nb_node)):
+            for i in range(int(board.nb_node)):
                 if (board.liste_node[i].owner == board.flag):   #si le noeud m'appartient
                     nb_mynode+=1
                     for j in  board.liste_node[i].neighbor:     # je regarde ses voisins
@@ -51,11 +51,11 @@ def play_pooo():
                             for k in current_node.neighbor:
                                 current_node_k = board.find_node(k)
                                 if current_node_k.owner != board.flag:  #si un des voisins est ennemi
-                                    move=parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node_k.id)
+                                    move = parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node_k.id)
                                     order(move)
-            logging.info('============ ( {} / {} ) ============='.format(nb_mynode,board.nb_node))
+            logging.info('============ ( {} / {} ) ============='.format(nb_mynode, board.nb_node))
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
-            order ('[{}]GAMEOVEROK'.format(UID))
+            order('[{}]GAMEOVEROK'.format(UID))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))
         elif 'ENDOFGAME' in msg:     # on sort de la boucle de jeu
             logging.debug('[play_pooo] Received end of game: {}'.format(msg))
