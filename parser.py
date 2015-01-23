@@ -22,7 +22,7 @@ def parser_init(chain, board):                     # parser chaine init #passer 
         radius = int(res1[i][3])
         offsize = int(res1[i][4])
         defsize = int(res1[i][5])
-        prod = (res1[i][6])
+        prod = str(res1[i][6])
         ls_aretes = []
         for j in range(nb_aretes):
             if id == int(res[j][0]):                   # A->B
