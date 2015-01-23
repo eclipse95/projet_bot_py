@@ -4,4 +4,5 @@
 
 problème avec le parser -> résolu, il ne prennait pas en charge les nombres négatifs
 probleme au niveau de la liste des voisins -> resolu, problème avec le constructeur de la classe Node
-probleme au niveau de la transmission des ordes
+probleme au niveau de la transmission des ordes -> partielmnt, si il ne trouve pas de voisin, c'est normal qu'il ne rien
+envoyer

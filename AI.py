@@ -51,7 +51,8 @@ def play_pooo():
                             for k in current_node.neighbor:
                                 current_node_k = board.find_node(k)
                                 if current_node_k.owner != board.flag:  #si un des voisins est ennemi
-                                    order(parametre_move(board.uid, 100, board.liste_node[i].id, current_node_k.id))
+                                    move=parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node_k.id)
+                                    order(move)
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode,board.nb_node))
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order ('[{}]GAMEOVEROK'.format(UID))

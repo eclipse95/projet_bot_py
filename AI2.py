@@ -50,18 +50,18 @@ def play_pooo():
                 #if check_in(source.neighbor, liste_node_ennemi) == False and check_in(source.neighbor, liste_node_neutre):
                 #Si les voisins sont neutres (ou allié) #Je ne suis pas sûr que ça marche tel quel
                     cible = board.find_node(source.neighbor[0]) #cible est de type node
-                    troupe_a_envoyer_min = (cible.defsize+cible.offsize+1)
+                    troupe_a_envoyer_min = cible.defsize + cible.offsize + 1
                     #Nbre de vaisseaux à envoyé pour prendre la planète
                     for b in range(len(source.neighbor)) :
                     #On parcourt les voisins neutres
                         cible_2 = board.find_node(source.neighbor[b])       # 2e cible pour comparer avec cible
-                        troupe_a_envoyer = (cible_2.defsize+cible_2.offsize+1)
+                        troupe_a_envoyer = (cible_2.defsize + cible_2.offsize + 1)
                         if troupe_a_envoyer < troupe_a_envoyer_min :
                             troupe_a_envoyer_min = troupe_a_envoyer
                             cible = cible_2         # la cible 2 devient la cible
 
                     if  troupe_a_envoyer_min < source.offsize :     #Teste si on peut attaquer
-                        ordre = parametre_move(board.uid,100,source.id,cible.id) # il faut créer la chaine car order ne prendre que cette chaine de la forme "[0947e717-02a1-4d83-9470-a941b6e8ed07]MOV33FROM1TO4"
+                        ordre = parametre_move(board.uid, 100, source, cible) # il faut créer la chaine car order ne prendre que cette chaine de la forme "[0947e717-02a1-4d83-9470-a941b6e8ed07]MOV33FROM1TO4"
                         #[<userid>]MOV<%offunits>FROM<cellid>TO<cellid> faut importer j'ai l'ai créer
                         #crée l'ordre d'attaque
                         order(ordre)
