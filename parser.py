@@ -73,9 +73,9 @@ def parser_state(chain, board):          #parser state optimisé
         board.find_node(cellid).update(owner, offunit, defunit)
     return board
 
-def ordre_builder(uid, offunits, source, target):
+def ordre_builder(uid, offunits, sourceID, targetID):
 #[<userid>]MOV<%offunits>FROM<cellid>TO<cellid>
-    ordre=str(uid,'MOV<',offunits)
-    ordre+=str(">FROM<",source,'>TO<')
-    ordre+=str(target,'>')
+    ordre='[' + str(uid) + ']' + 'MOV' + str(offunits)
+    ordre+="FROM" + str(sourceID) + 'TO'
+    ordre+=str(targetID)
     return ordre
