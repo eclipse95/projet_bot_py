@@ -11,23 +11,20 @@ from order import *
 
 global plateau              # les variables globales, ça craint
 board = plateau()                  # variable plateau
-global node_prod2
+
 
 def register_pooo(uid):
     board.set_uid(uid)
     logging.info('[register_pooo] Bot {} registered'.format(uid))
-    #global UID              # inutile?
-    #UID = uid                 # inutile?
+    # global UID              # inutile?
+    # UID = uid                 # inutile?
     pass
 
 
 def init_pooo(init_string):
-    #logging.info('[init_pooo] Game init: {!r}'.format(init_string))
+    # logging.info('[init_pooo] Game init: {!r}'.format(init_string))
     parser.parser_init(str(init_string), board)
     board.display()
-    for i in range(int(board.nb_node)):
-        if len(board.liste_node[i].prod_off) == 2 or str(board.liste_node[i].prod_off) == 'II':
-            node_prod2 = board.liste_node[i]
     pass
 
 
@@ -40,10 +37,10 @@ def play_pooo():
             logging.debug('[play_pooo] Received state: {}'.format(msg))
             parser.parser_state(msg, board)
             board.display()
-            nb_mynode=0
+            nb_mynode = 0
             for i in range(int(board.nb_node)):
                 if (board.liste_node[i].owner == board.flag and board.liste_node[i].offsize > 0):   # si le noeud m'appartient
-                    nb_mynode+=1
+                    nb_mynode += 1
                     if len(board.liste_node[i].neighbor) == 1 and board.liste_node[i].offsize > 0:
                         current_node = board.find_node(board.liste_node[i].neighbor[0])
                         if current_node.offsize < 30:
