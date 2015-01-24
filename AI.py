@@ -63,7 +63,8 @@ def play_pooo():
                                         move = parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node_k.id)
                                         order(move)
                                     else:
-                                        order(parser.ordre_builder(board.uid, 100, current_node.id, node_prod2.id))
+                                        cible = board.find_node(random.choice(current_node.neighbor))
+                                        order(parser.ordre_builder(board.uid, 100, current_node.id, cible.id))
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode, board.nb_node))
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order('[{}]GAMEOVEROK'.format(board.uid))
