@@ -37,6 +37,7 @@ def play_pooo():
             liste_node_allie = []
             logging.debug('[play_pooo] Received state: {}'.format(msg))
             parser.parser_state(msg, board)
+            board.display()
             for i in range(board.nb_node):
                 if board.liste_node[i].owner == board.flag:
                     liste_node_allie.append(board.liste_node[i].id)
@@ -47,13 +48,14 @@ def play_pooo():
             for a in range(len(liste_node_allie)):     # Parcours des cellules alliées
                 source = board.find_node(a)            # Copie l'addresse memoire dans source # source est de "type Node"
                 cible = None
-                if check_in(source.neighbor,liste_node_ennemi):     # si le node a un ennemi
+                if check_in(source.neighbor,liste_node_ennemi) and source.offsize > 0:     # si le node a un ennemi
                     for i in range(len(source.neighbor)):
                         cible = board.find_node(source.neighbor[i])
                         if (cible != board.flag and cible != -1):   # on trouve l'ennemi
                             if source.offsize > (cible.offsize + cible.defsize) or source.offsize == 30:
                                 order(parser.ordre_builder(board.uid,100,source.id,cible.id))   #on l'attaque
-                elif check_in(source.neighbor, liste_node_neutre):  # on peut mettre qu'une seule condition, l'autre est déjà testé
+                elif check_in(source.neighbor, liste_node_neutre) and source.offsize > 0:
+                    # on peut mettre qu'une seule condition, l'autre est déjà testé
                     # Si les voisins sont neutres (ou allié)
                     cible = board.find_node(source.neighbor[0])  # cible est de type node
                     troupe_a_envoyer_min = cible.defsize + cible.offsize + 1
@@ -71,7 +73,7 @@ def play_pooo():
                         # crée l'ordre d'attaque
                         order(ordre)
                         # A l'ATTAQUE
-                else:
+                elif source.offsize > 0:
                     # Si les voisins sont alliés
                     if len(source.neighbor) == 1:   #le noeud n'a qu'un voisin allié
                         cible = board.find_node(source.neighbor[0])
@@ -89,7 +91,7 @@ def play_pooo():
                             order(parser.ordre_builder(board.uid,(30-cible.offsize)*100/source.offsize,source.id,cible.id))
 
 
-            logging.info('============  {}  ============='.format(liste_node_allie))
+            logging.info('============ ( {} / {} ) ============='.format(len(liste_node_allie), board.nb_node))
 
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order('[{}]GAMEOVEROK'.format(board.uid))

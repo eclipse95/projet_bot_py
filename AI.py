@@ -42,14 +42,14 @@ def play_pooo():
             board.display()
             nb_mynode=0
             for i in range(int(board.nb_node)):
-                if (board.liste_node[i].owner == board.flag):   # si le noeud m'appartient
+                if (board.liste_node[i].owner == board.flag and board.liste_node[i].offsize > 0):   # si le noeud m'appartient
                     nb_mynode+=1
-                    if len(board.liste_node[i].neighbor) == 1:
+                    if len(board.liste_node[i].neighbor) == 1 and board.liste_node[i].offsize > 0:
                         current_node = board.find_node(board.liste_node[i].neighbor[0])
-                        if (current_node.offsize < 30):
+                        if current_node.offsize < 30:
                             order(parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
-                    else:
-                        for j in  board.liste_node[i].neighbor:     # je regarde ses voisins
+                    elif board.liste_node[i].offsize > 0:
+                        for j in board.liste_node[i].neighbor:     # je regarde ses voisins
                             current_node = board.find_node(j)
                             if current_node.owner != board.flag:    # si un de ses voisins est un ennemi
                                 if board.liste_node[i].offsize > (current_node.offsize + current_node.defsize):
@@ -63,7 +63,8 @@ def play_pooo():
                                         move = parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node_k.id)
                                         order(move)
                                     else:
-                                        order(parser.ordre_builder(board.uid, 100, current_node.id, node_prod2.id))
+                                        cible = board.find_node(random.choice(current_node.neighbor))
+                                        order(parser.ordre_builder(board.uid, 100, current_node.id, cible.id))
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode, board.nb_node))
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order('[{}]GAMEOVEROK'.format(board.uid))
