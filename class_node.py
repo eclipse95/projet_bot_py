@@ -14,7 +14,6 @@ class node():
         self.offsize = offsize            # unité off
         self.defsize = defsize            # unité def
 
-
     def addneighbor(self, int_value):            # ajoute le numéro des voisins aux noeuds
         self.neighbor.append(int_value)
 

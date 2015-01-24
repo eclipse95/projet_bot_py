@@ -1,16 +1,15 @@
-#---------fichier pour stocker l'IA suggeré par Pierre
+# ---------fichier pour stocker l'IA suggeré par Pierre
 
-#----------LIBS----------
+# ----------LIBS----------
 from class_plateau import *
 from poooc import order, state, state_on_update, etime
 import parser
 import inspect
 import logging
-from order import *
 import random
 
-global board              #les variables globales, ça craint
-board = plateau()                  #variable plateau
+global board              # les variables globales, ça craint
+board = plateau()                  # variable plateau
 
 
 def register_pooo(uid):
@@ -47,11 +46,10 @@ def play_pooo():
                     liste_node_ennemi.append(board.liste_node[i].id)
             for a in range(len(liste_node_allie)):     # Parcours des cellules alliées
                 source = board.find_node(a)            # Copie l'addresse memoire dans source # source est de "type Node"
-                cible = None
                 if check_in(source.neighbor, liste_node_ennemi) and source.offsize > 0:     # si le node a un ennemi
                     for i in range(len(source.neighbor)):
                         cible = board.find_node(source.neighbor[i])
-                        if (cible != board.flag and cible != -1):   # on trouve l'ennemi
+                        if cible != board.flag and cible != -1:   # on trouve l'ennemi
                             if source.offsize > (cible.offsize + cible.defsize) or source.offsize == 30:
                                 order(parser.ordre_builder(board.uid, 100, source.id, cible.id))   # on l'attaque
                 elif check_in(source.neighbor, liste_node_neutre) and source.offsize > 0:
@@ -83,7 +81,7 @@ def play_pooo():
                             source_2 = source.neighbor[b]
                             if check_in(source_2.neighbor,liste_node_ennemi) or check_in(source_2,liste_node_neutre):
                                 # on envoie des renforts
-                                if (source.offsize != 0):
+                                if source.offsize != 0:
                                     order(parser.ordre_builder(board.uid,(30-source_2.offsize)*100/source.offsize, source.id, source_2.id))
                                     pass
                         if source.offsize != 0:

@@ -11,7 +11,6 @@ class plateau():
         #self.dico_aretes = dict()       #dico pour stocker les arretes
         self.speed = speed                # vitesse
 
-
     def set_settings(self, nb_player, nb_node, ls_node, flag, speed, matchid):
         self.flag = flag                # couleur joueur
         self.matchid = matchid            # match ID
@@ -20,20 +19,16 @@ class plateau():
         self.nb_player = nb_player        # nb de joueur
         self.speed = speed                # vitesse
 
-
     def add_node(self, node):           # methode pour ajouter un noeud (inutile normalement)
         self.liste_node.append(node)
-
 
     def display(self):           # méthode d'affichage
         print('uid: ', self.uid, '; match ID: ', self.matchid, '; flag: ', self.flag, '; vitesse:', self.speed)
         for i in range(len(self.liste_node)):
             self.liste_node[i].display()
 
-
     def set_uid(self, uid):
         self.uid = uid
-
 
     def find_node(self, integer):
         if integer == self.liste_node[integer].id:      # si les noeuds sont triés

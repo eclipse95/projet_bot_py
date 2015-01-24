@@ -1,11 +1,11 @@
 from re import *                            # lib regex
 from class_node import *
 
-####### Module contenant les parsers #########
+# ###### Module contenant les parsers #########
 
 
 def parser_init(chain, board):                     # parser chaine init #passer la board en paramètre?
-    res=search('INIT(.+)TO(\d+)\[(\d+)\];(\d);(\d+)CELLS:', chain)  # parse parametres match
+    res = search('INIT(.+)TO(\d+)\[(\d+)\];(\d);(\d+)CELLS:', chain)  # parse parametres match
     board.matchid = str(res.group(1))
     board.nb_player = int(res.group(2))
     board.flag = int(res.group(3))
