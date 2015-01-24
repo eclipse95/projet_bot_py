@@ -20,7 +20,7 @@ def register_pooo(uid):
 
 
 def init_pooo(init_string):
-    #logging.info('[init_pooo] Game init: {!r}'.format(init_string))
+    # logging.info('[init_pooo] Game init: {!r}'.format(init_string))
     parser.parser_init(str(init_string), board)
     board.display()
     pass
@@ -45,28 +45,49 @@ def play_pooo():
                 else:
                     liste_node_ennemi.append(board.liste_node[i].id)
             for a in range(len(liste_node_allie)):     # Parcours des cellules alliées
-                source = board.find_node(a)               # Copie l'addresse memoire dans source # source est de "type Node"
-                #if source.neighbor not in liste_node_ennemi and source.neighbor in liste_node_neutre:
-                if check_in(source.neighbor, liste_node_ennemi) == False and check_in(source.neighbor, liste_node_neutre):
-                #Si les voisins sont neutres (ou allié) #Je ne suis pas sûr que ça marche tel quel
-                    cible = board.find_node(source.neighbor[0]) #cible est de type node
+                source = board.find_node(a)            # Copie l'addresse memoire dans source # source est de "type Node"
+                cible = None
+                if check_in(source.neighbor,liste_node_ennemi):     # si le node a un ennemi
+                    for i in range(len(source.neighbor)):
+                        cible = board.find_node(source.neighbor[i])
+                        if (cible != board.flag and cible != -1):   # on trouve l'ennemi
+                            if source.offsize > (cible.offsize + cible.defsize) or source.offsize == 30:
+                                order(parser.ordre_builder(board.uid,100,source.id,cible.id))   #on l'attaque
+                elif check_in(source.neighbor, liste_node_neutre):  # on peut mettre qu'une seule condition, l'autre est déjà testé
+                    # Si les voisins sont neutres (ou allié)
+                    cible = board.find_node(source.neighbor[0])  # cible est de type node
                     troupe_a_envoyer_min = cible.defsize + cible.offsize + 1
-                    #Nbre de vaisseaux à envoyé pour prendre la planète
+                    # Nbre de vaisseaux à envoyé pour prendre la planète
                     for b in range(len(source.neighbor)):
-                    #On parcourt les voisins neutres
+                        # On parcourt les voisins neutres
                         cible_2 = board.find_node(source.neighbor[b])       # 2e cible pour comparer avec cible
                         troupe_a_envoyer = (cible_2.defsize + cible_2.offsize + 1)
                         if troupe_a_envoyer < troupe_a_envoyer_min:
                             troupe_a_envoyer_min = troupe_a_envoyer
                             cible = cible_2         # la cible 2 devient la cible
 
-                    if  troupe_a_envoyer_min < source.offsize:     #Teste si on peut attaquer
-                        ordre = parametre_move(board.uid, 100, source, cible)   # il faut créer la chaine car order ne prendre que cette chaine de la forme "[0947e717-02a1-4d83-9470-a941b6e8ed07]MOV33FROM1TO4"
-                        #[<userid>]MOV<%offunits>FROM<cellid>TO<cellid> faut importer j'ai l'ai créer
-                        #crée l'ordre d'attaque
+                    if  troupe_a_envoyer_min < source.offsize:     # Teste si on peut attaquer
+                        ordre = parser.ordre_builder(board.uid, 100, source.id, cible.id)   # creer l'ordre
+                        # crée l'ordre d'attaque
                         order(ordre)
-                        #order(board.uid,100,source.id,cible.id)
-                        #A l'ATTAQUE
+                        # A l'ATTAQUE
+                else:
+                    # Si les voisins sont alliés
+                    if len(source.neighbor) == 1:   #le noeud n'a qu'un voisin allié
+                        cible = board.find_node(source.neighbor[0])
+                        order(parser.ordre_builder(board.uid,(30-cible.offsize)*100/source.offsize,source.id,cible.id))
+                    else:
+                        for b in range(len(source.neighbor)):   # On parcourt ses voisins
+                            source_2 = source.neighbor[b]
+                            if check_in(source_2.neighbor,liste_node_ennemi) or check_in(source_2,liste_node_neutre):
+                                # on envoie des renforts
+                                if (source.offsize != 0):
+                                    order(parser.ordre_builder(board.uid,(30-source_2.offsize)*100/source.offsize, source.id, source_2.id))
+                                    pass
+                        if source.offsize != 0:
+                            cible = board.find_node(random.choice(source.neighbor))
+                            order(parser.ordre_builder(board.uid,(30-cible.offsize)*100/source.offsize,source.id,cible.id))
+
 
             logging.info('============  {}  ============='.format(liste_node_allie))
 
