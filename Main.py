@@ -15,8 +15,8 @@ board = plateau()                  #variable plateau
 def register_pooo(uid):
     board.set_uid(uid)
     logging.info('[register_pooo] Bot {} registered'.format(uid))
-    global UID              #inutile?
-    UID = uid                 #inutile?
+    global UID
+    UID = uid
     pass
 
 
