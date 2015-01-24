@@ -31,6 +31,8 @@ global plateau
 global identifiant
 
 def register_pooo(uid):
+    global identifiant
+    identifiant = uid
     """Inscrit un joueur et initialise le robot pour la compétition
 
         :param uid: identifiant utilisateur
@@ -73,7 +75,7 @@ def init_pooo(init_string):
     
     #recuperation des informations de init_string
     plateau = parser_init(init_string,plateau)
-    
+    plateau.uid = identifiant
     
     #initialisation du plateau
     #plateau.nb_player = etat_debut[0]
@@ -108,16 +110,19 @@ def play_pooo():
         a = state_on_update()
         if 'Game over' in a:
             break
-        
         plateau = parser_state(a,plateau)
-        #plateau = maj_plateau(a)
+        plateau.display()
+        
+
         noeuds = nos_noeuds(plateau)
-        order(voisins_ennemis(plateau,noeuds))
-        print('mon FLAG EST:',plateau.flag)
+        order(str(voisins_ennemis(plateau,noeuds)))
+        order(str(voisins_neutres(plateau,noeuds)))
+        order(str(monseulvoisin_estmoi(plateau,noeuds)))
+        order(str(de_quel_cote_aller(plateau,noeuds)))
+
     #INIT20ac18ab-6d18-450e-94af-bee53fdc8fcaTO6[2];1;3CELLS:1(23,9)'2'30'8'I,2(41,55)'1'30'8'II,3(23,103)'1'20'5'I;2LINES:1@3433OF2,1@6502OF3
     #STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3[1]33'6;4MOVES:1<5[2]@232'>6[2]@488'>3[1]@4330'2,1<10[1]@2241'3
 
         
-
 
 
