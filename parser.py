@@ -32,44 +32,37 @@ def parser_init(chain, board):                     # parser chaine init #passer 
 #                ls_aretes.append([res[j][0],res[j][1]])
                 ls_aretes.append(int(res[j][0]))
         board.liste_node.append(node(id, 0, radius, [xpos, ypos], offsize, defsize, prod, ls_aretes))    #liste de noeud
-    return board         #retourne la board #inutile?
+    
+    #definit les voisinages de tous les noeuds    
+    nb_voisinage = len(findall('\d+@\d+OF\d+',chain))
+    a = findall('\d+@\d+OF\d+',chain)
+    
+    #creation de liste pour les voisins
+    for i in range(len(board.liste_node)):
+        board.liste_node[i].neighbor = []
+
+    #insertion des voisins    
+    for i in range(nb_voisinage):
+        depart = search('(\d+)@\d+OF(\d+)',a[i]).group(1)
+        #print('depart',depart)
+        arrivee = search('(\d+)@\d+OF(\d+)',a[i]).group(2)
+        #print('arrivee',arrivee)
+        n1 = cherche_noeud(board,depart)
+        n2 = cherche_noeud(board,arrivee)
+        n1.neighbor.append(n2)
+        n2.neighbor.append(n1)
+
+    return board
 
 
-def lire_state(string):
-    regex = compile('STATE.+;\dCELLS')
-    regex2 = compile('\d+CELLS.+MOVES')
-    regex3 = compile('\d+MOVES.*')
-    regex5 = compile('(\d+\W+\d+\W+\d+\W+\d+)+')
-    regex6 = compile("(\d*[<>]\d+\[\d+\]@\d+'\d*)")
-    regex7 = compile('\d+')
-    #1er filtrage
-    identifiant = regex.search(string).group(0)
-    identifiant = identifiant[5:len(identifiant)-7]
-    cells = regex2.search(string).group(0)
-    cells = cells[:len(cells)-7]
-    moves = regex3.search(string).group(0)
-    #2nd filtrage
-    cells = regex5.findall(cells)
-    moves = regex6.findall(moves)
-    for i in range(len(moves)):
-        if moves[i][0] == '<' or moves[i][0] == '>':
-            pa = regex7.search(moves[i-1]).group(0)
-            moves[i] = pa+moves[i]          
 
-    print("identifiant: ", identifiant)
-    print("les cellules:", cells)
-    print("les mouvements:", moves)
-
-
-def parser_state(chain, board):          #parser state optimisé
-    #STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3[1]33'6;4MOVES:1<5[2]@232'>6[2]@488'>3[1]@4330'2,1<10[1]@2241'3
-    cells = findall("(-\d+|\d+)\[(-\d+|\d+)\](\d+)'(\d+)", chain)
-    #moves = findall("(\d+)[<>](\d+)\[(\d+)\]@(\d+)'", chain)      #desactiver car on ne gere pas encore les mouvmnts
-    for i in range(len(cells)):
-        cellid = int(cells[i][0])
-        owner = int(cells[i][1])
-        offunit = int(cells[i][2])
-        defunit = int(cells[i][3])
+def parser_state(chain, board): #parser state optimisé
+    cells = findall("(\d+\[-*\d+\]\d+\W\d+)", chain)
+    for i in range (len(cells)):
+        cellid = int(search('(\d+)\[',cells[i]).group(1))
+        owner = int(search('\[(-*\d+)\]',cells[i]).group(1))
+        offunit = int(search('\](\d+)',cells[i]).group(1))
+        defunit = int(search('\'(\d+)',cells[i]).group(1))
         board.find_node(cellid).update(owner, offunit, defunit)
     return board
 
@@ -79,3 +72,9 @@ def ordre_builder(uid, offunits, sourceID, targetID):
     ordre += "FROM" + str(sourceID) + 'TO'
     ordre += str(targetID)
     return ordre
+    
+#recherche d'un noeud avec id
+def cherche_noeud(plateau,num):
+    for i in range(len(plateau.liste_node)):
+        if int(plateau.liste_node[i].id) == int(num):
+            return plateau.liste_node[i]
