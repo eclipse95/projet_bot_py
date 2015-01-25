@@ -109,6 +109,6 @@ def play_pooo():
 def check_in(liste1, liste2):
     for i in range(len(liste1)):
         for j in range(len(liste2)):
-            if liste1[j] == liste2[i]:
+            if liste1[i] == liste2[j]:
                 return True
     return False
