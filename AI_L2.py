@@ -9,8 +9,9 @@ import logging
 
 
 global plateau              # les variables globales, ça craint
+global target_list
 board = plateau()                  # variable plateau
-
+target_list = []
 
 def register_pooo(uid):
     board.set_uid(uid)
@@ -24,6 +25,9 @@ def init_pooo(init_string):
     # logging.info('[init_pooo] Game init: {!r}'.format(init_string))
     parse.parser_init(init_string, board)
     board.display()
+    for i in range(len(board.liste_node)):
+        if board.liste_node[i].prod_off == 'II' or board.liste_node[i].prod_off == 'III':
+            target_list.append(board.liste_node[i].id)
     pass
 
 
@@ -47,20 +51,25 @@ def play_pooo():
                     elif board.liste_node[i].offsize > 0:
                         for j in board.liste_node[i].neighbor:     # je regarde ses voisins
                             current_node = board.find_node(j)
-                            if current_node.owner != board.flag:    # si un de ses voisins est un ennemi
+                            if current_node.owner != board.flag and check_in([current_node.id],target_list):    # si un de ses voisins est un ennemi
                                 if board.liste_node[i].offsize > (current_node.offsize + current_node.defsize):
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                                 elif board.liste_node[i].offsize > 29:
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
-                            elif current_node.owner == board.flag:  # si ses voisins sont alliés
-                                for k in current_node.neighbor:
-                                    current_node_k = board.find_node(k)
-                                    if current_node_k.owner != board.flag:  # si un des voisins est ennemi
-                                        move = parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node_k.id)
-                                        order(move)
-                                    else:
-                                        cible = board.find_node(random.choice(current_node.neighbor))
-                                        order(parse.ordre_builder(board.uid, 100, current_node.id, cible.id))
+                            elif current_node.owner != board.flag:    # si un de ses voisins est un ennemi
+                                if board.liste_node[i].offsize > (current_node.offsize + current_node.defsize):
+                                    order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
+                                elif board.liste_node[i].offsize > 29:
+                                    order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
+                                elif current_node.owner == board.flag:  # si ses voisins sont alliés
+                                    for k in current_node.neighbor:
+                                        current_node_k = board.find_node(k)
+                                        if current_node_k.owner != board.flag:  # si un des voisins est ennemi
+                                            move = parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node_k.id)
+                                            order(move)
+                                        else:
+                                            cible = board.find_node(random.choice(current_node.neighbor))
+                                            order(parse.ordre_builder(board.uid, 100, current_node.id, cible.id))
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode, board.nb_node))
             if (nb_mynode == len(board.liste_node)):
                 print('we think that we won')
@@ -75,4 +84,12 @@ def play_pooo():
             logging.error('[play_pooo] Unknown msg: {!r}'.format(msg))
     logging.info('>>> Exit play_pooo function')
     pass
+
+def check_in(liste1, liste2):
+    for i in range(len(liste1)):
+        for j in range(len(liste2)):
+            if liste1[i] == liste2[j]:
+                return True
+    return False
+
 

@@ -22,6 +22,10 @@ def init_pooo(init_string):
     # logging.info('[init_pooo] Game init: {!r}'.format(init_string))
     parse.parser_init(init_string, board)
     board.display()
+    # global target_list
+    # for i in range(len(board.liste_node)):
+    #    if board.liste_node[i].prod_off == 'II' or board.liste_node[i].prod_off == 'III':
+    #        target_list.append(board.liste_node[i].id)
     pass
 
 
