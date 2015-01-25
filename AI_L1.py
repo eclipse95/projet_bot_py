@@ -41,9 +41,9 @@ def play_pooo():
             for i in range(board.nb_node):
                 if board.liste_node[i].owner == board.flag:     # on possede le noeud
                     nb_node += 1
-                    if board.liste_node[i].offsize > 10:        # si le nb d'unité offencive est > 10
+                    if board.liste_node[i].offsize > 0:        # si le nb d'unité offensive est > 0
                         target_id = random.choice(board.liste_node[i].neighbor)     # on l'envoie à un voisin aléatoire
-                        order(ordre_builder(board.uid, random.randint(1, 100), board.liste_node[i].id, target_id))
+                        order(ordre_builder(board.uid, 100, board.liste_node[i].id, target_id))
             logging.info('============ ( {} / {} ) ============='.format(nb_node, board.nb_node))
 
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
