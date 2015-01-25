@@ -37,7 +37,7 @@ def play_pooo():
             logging.debug('[play_pooo] Received state: {}'.format(msg))
             parse.parser_state(msg, board)
             board.display()
-            for i in range(board.nb_node):
+            for i in range(len(board.liste_node)):
                 if board.liste_node[i].owner == board.flag:
                     liste_node_allie.append(board.liste_node[i].id)
                 elif board.liste_node[i] == -1:

@@ -5,7 +5,7 @@ from class_node import *
 
 
 def parser_init(chain, board):                     # parser chaine init
-    res = search('INIT(.+)TO(\d+)\[(\d+)\];(\d);(\d+)CELLS:', chain)  # parse parametres match
+    res = search('INIT(.+)TO(\d+)\[(\d+)\];(\d+);(\d+)CELLS:', chain)  # parse parametres match
     board.matchid = str(res.group(1))
     board.nb_player = int(res.group(2))
     board.flag = int(res.group(3))
