@@ -1,8 +1,7 @@
 # ---------fichier pour stocker l'IA L1
 # envoi un nombre aléatoire d'unité offensive si un noeud atteint 10 unités offensive
 # ----------LIBS----------
-from parser import *
-import parser
+from parse import *
 import inspect
 import logging
 import random
@@ -12,7 +11,6 @@ from poooc import order, state, state_on_update, etime
 
 global plateau              # les variables globales, ça craint
 board = plateau()                  # variable plateau
-global chain
 
 def register_pooo(uid):
     board.set_uid(uid)
@@ -24,14 +22,15 @@ def register_pooo(uid):
 
 def init_pooo(init_string):
     # logging.info('[init_pooo] Game init: {!r}'.format(init_string))
-    chain = init_string
+    parse.parser_init(init_string, board)
+    board.display()
+    
     pass
 
 
 def play_pooo():
     logging.info('Entering play_pooo fonction from {} module...'.format(inspect.currentframe().f_back.f_code.co_filename))
-    parser.parser_init(chain, board)
-    board.display()
+    
     while True:
         msg = state_on_update()
         if 'STATE' in msg:
