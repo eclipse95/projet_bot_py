@@ -1,5 +1,6 @@
 # ---------fichier pour stocker l'IA L1
 # envoi un nombre aléatoire d'unité offensive si un noeud atteint 10 unités offensive
+# niveau basique
 # ----------LIBS----------
 from parse import *
 import inspect

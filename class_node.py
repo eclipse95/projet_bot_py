@@ -1,13 +1,13 @@
 class node():
     def __init__(self, id=-1, owner=-1, radius=-1, pos=[], offsize=-1, defsize=-1, prod_off=1, ls_neighbor=[]):
-        self.id = id
+        self.id = id                      # ID du noeud
         self.owner = owner                # n° du joueur
-        self.radius = radius              # rayon du noeud
-        self.pos = pos                    # position
+        self.radius = radius              # rayon du noeud      #inutilisé
+        self.pos = pos                    # position            #inutilisé
         self.offsize = offsize            # unité off
         self.defsize = defsize            # unité def
-        self.prod_off = prod_off
-        self.neighbor = ls_neighbor       # liste des noueds voisins
+        self.prod_off = prod_off          # production offencive
+        self.neighbor = ls_neighbor       # liste des noeuds voisins (ID)
 
     def update(self, owner, offsize, defsize):         # mise à jour du noeud
         self.owner = owner                # n° joueur
