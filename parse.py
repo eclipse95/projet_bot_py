@@ -12,7 +12,7 @@ def parser_init(chain, board):                     # parser chaine init
     board.speed = int(res.group(4))
     board.nb_node = int(res.group(5))
     res1 = findall("(\d+)\((-\d+|\d+),(-\d+|\d+)\)'(\d+)'(\d+)'(\d+)'(\w*)", chain)     # parse les noeuds
-    nb_aretes = int(search(";(\d)LINES:", chain).group(1))
+    nb_aretes = int(search(";(\d+)LINES:", chain).group(1))
     res = findall("(\d+)@(\d+)OF(\d+)", chain)           # parse les aretes (n° noeud, distance, n° noeud suivant)
     board.liste_node = []
     for i in range(board.nb_node):                       # assemblage des noeuds
