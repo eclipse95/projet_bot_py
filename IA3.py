@@ -17,7 +17,7 @@ __version__='0.1'
 from poooc import order, state, state_on_update, etime
 
 
-from parser import *
+from parse import *
 # mieux que des print partout
 import logging
 # pour faire de l'introspection
