@@ -3,7 +3,7 @@
 import random
 from poooc import order, state, state_on_update, etime
 from class_plateau import *
-import parser
+import parse
 import inspect
 import logging
 
@@ -22,7 +22,7 @@ def register_pooo(uid):
 
 def init_pooo(init_string):
     # logging.info('[init_pooo] Game init: {!r}'.format(init_string))
-    parser.parser_init(init_string, board)
+    parse.parser_init(init_string, board)
     board.display()
     pass
 
@@ -34,7 +34,7 @@ def play_pooo():
         msg = state_on_update()
         if 'STATE' in msg:
             logging.debug('[play_pooo] Received state: {}'.format(msg))
-            parser.parser_state(msg, board)
+            parse.parser_state(msg, board)
             board.display()
             nb_mynode = 0
             for i in range(int(board.nb_node)):
@@ -43,24 +43,24 @@ def play_pooo():
                     if len(board.liste_node[i].neighbor) == 1 and board.liste_node[i].offsize > 0:
                         current_node = board.find_node(board.liste_node[i].neighbor[0])
                         if current_node.offsize < 30:
-                            order(parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
+                            order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                     elif board.liste_node[i].offsize > 0:
                         for j in board.liste_node[i].neighbor:     # je regarde ses voisins
                             current_node = board.find_node(j)
                             if current_node.owner != board.flag:    # si un de ses voisins est un ennemi
                                 if board.liste_node[i].offsize > (current_node.offsize + current_node.defsize):
-                                    order(parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
+                                    order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                                 elif board.liste_node[i].offsize > 29:
-                                    order(parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
+                                    order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                             elif current_node.owner == board.flag:  # si ses voisins sont alliés
                                 for k in current_node.neighbor:
                                     current_node_k = board.find_node(k)
                                     if current_node_k.owner != board.flag:  # si un des voisins est ennemi
-                                        move = parser.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node_k.id)
+                                        move = parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node_k.id)
                                         order(move)
                                     else:
                                         cible = board.find_node(random.choice(current_node.neighbor))
-                                        order(parser.ordre_builder(board.uid, 100, current_node.id, cible.id))
+                                        order(parse.ordre_builder(board.uid, 100, current_node.id, cible.id))
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode, board.nb_node))
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order('[{}]GAMEOVEROK'.format(board.uid))
