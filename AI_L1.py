@@ -13,17 +13,16 @@ from poooc import order, state, state_on_update, etime
 global plateau              # les variables globales, ça craint
 board = plateau()                  # variable plateau
 
+
 def register_pooo(uid):
     board.set_uid(uid)
     logging.info('[register_pooo] Bot {} registered'.format(uid))
-    global UID
-    UID = uid
     pass
 
 
 def init_pooo(init_string):
     # logging.info('[init_pooo] Game init: {!r}'.format(init_string))
-    parse.parser_init(init_string, board)
+    parser_init(init_string, board)
     board.display()
     
     pass
@@ -40,15 +39,15 @@ def play_pooo():
             board.display()
             nb_node = 0
             for i in range(board.nb_node):
-                if board.liste_node[i].owner == board.flag:
+                if board.liste_node[i].owner == board.flag:     # on possede le noeud
                     nb_node += 1
-                    if board.liste_node[i].offsize > 10:
-                        target_id = random.choice(board.liste_node[i].neighbor)
-                        order(ordre_builder(board.uid, random.randint(0, 100), board.liste_node[i].id, target_id))
+                    if board.liste_node[i].offsize > 10:        # si le nb d'unité offencive est > 10
+                        target_id = random.choice(board.liste_node[i].neighbor)     # on l'envoie à un voisin aléatoire
+                        order(ordre_builder(board.uid, random.randint(1, 100), board.liste_node[i].id, target_id))
             logging.info('============ ( {} / {} ) ============='.format(nb_node, board.nb_node))
 
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
-            order('[{}]GAMEOVEROK'.format(UID))
+            order('[{}]GAMEOVEROK'.format(board.uid))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))
         elif 'ENDOFGAME' in msg:     # on sort de la boucle de jeu
             logging.debug('[play_pooo] Received end of game: {}'.format(msg))

@@ -47,9 +47,9 @@ def parser_state(chain, board):          # parser state optimisé
     return board
 
 
-def ordre_builder(uid, offunits, sourceID, targetID):   # créateur d'ordre
+def ordre_builder(uid, offunits, sourceid, targetid):   # créateur d'ordre
     # [<userid>]MOV<%offunits>FROM<cellid>TO<cellid>
     ordre = '[' + str(uid) + ']' + 'MOV' + str(offunits)
-    ordre += "FROM" + str(sourceID) + 'TO'
-    ordre += str(targetID)
+    ordre += "FROM" + str(sourceid) + 'TO'
+    ordre += str(targetid)
     return ordre                                        # retourne la chaine

@@ -49,12 +49,12 @@ def play_pooo():
                         current_node = board.find_node(board.liste_node[i].neighbor[0])
                         if (current_node.offsize < 20 and current_node.prod_off == 'I') or (current_node.offsize < 30 and current_node.prod_off == 'II') or (current_node.offsize < 40 and current_node.prod_off == 'III'):
                             # si le noeud voisin n'est pas plein
-                            order(parse.ordre_builder(board.uid, max_renfort(board.liste_node[i],current_node), board.liste_node[i].id, current_node.id))
+                            order(parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node), board.liste_node[i].id, current_node.id))
                     elif board.liste_node[i].offsize > 0:
                         for j in board.liste_node[i].neighbor:     # je regarde ses voisins
                             current_node = board.find_node(j)
-                            if current_node.owner != board.flag and check_in([current_node.id],target_list):
-                            # si un de ses voisins est un ennemi et fait partie de la liste prioritaire
+                            if current_node.owner != board.flag and check_in([current_node.id], target_list):
+                                # si un de ses voisins est un ennemi et fait partie de la liste prioritaire
                                 if board.liste_node[i].offsize > (current_node.offsize + current_node.defsize):
                                     # si j'ai suffisament d'unité pour prendre le noeud
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
@@ -91,6 +91,7 @@ def play_pooo():
     logging.info('>>> Exit play_pooo function')
     pass
 
+
 def check_in(liste1, liste2):   # fonction qui verifie la présence d'un élément commun aux deux listes
     for i in range(len(liste1)):
         for j in range(len(liste2)):
@@ -98,7 +99,8 @@ def check_in(liste1, liste2):   # fonction qui verifie la présence d'un éléme
                 return True
     return False
 
-def max_renfort(source,cible):  # calcul le nombre d'unités à envoyer
+
+def max_renfort(source, cible):  # optimise le nombre d'unités de renfort à envoyer
     if cible.prod_off == 'I':
         return ((20-cible.offsize)*100)/source.offsize
     elif cible.prod_off == 'II':
