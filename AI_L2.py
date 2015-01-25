@@ -15,6 +15,7 @@ global target_list
 board = plateau()                  # variable plateau
 target_list = []                   # liste des cibles prioritaires production II et III
 
+
 def register_pooo(uid):
     board.set_uid(uid)              # stocke UID dans le plateau
     logging.info('[register_pooo] Bot {} registered'.format(uid))
@@ -91,12 +92,14 @@ def play_pooo():
     logging.info('>>> Exit play_pooo function')
     pass
 
+
 def check_in(liste1, liste2):   # fonction qui verifie la présence d'un élément commun aux deux listes
     for i in range(len(liste1)):
         for j in range(len(liste2)):
             if liste1[i] == liste2[j]:
                 return True
     return False
+
 
 def max_renfort(source,cible):  # calcul le nombre d'unités à envoyer
     if cible.prod_off == 'I':
