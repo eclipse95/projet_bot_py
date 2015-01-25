@@ -49,7 +49,7 @@ def play_pooo():
                         current_node = board.find_node(board.liste_node[i].neighbor[0])
                         if (current_node.offsize < 20 and current_node.prod_off == 'I') or (current_node.offsize < 30 and current_node.prod_off == 'II') or (current_node.offsize < 40 and current_node.prod_off == 'III'):
                             # si le noeud voisin n'est pas plein
-                            order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
+                            order(parse.ordre_builder(board.uid, max_renfort(board.liste_node[i],current_node), board.liste_node[i].id, current_node.id))
                     elif board.liste_node[i].offsize > 0:
                         for j in board.liste_node[i].neighbor:     # je regarde ses voisins
                             current_node = board.find_node(j)
@@ -73,16 +73,13 @@ def play_pooo():
                                         current_node_k = board.find_node(k)
                                         if current_node_k.owner != board.flag:  # si un des voisins est ennemi
                                             # j'envois des unités de renfort
-                                            move = parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id)
+                                            move = parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node), board.liste_node[i].id, current_node.id)
                                             order(move)
                                         else:
                                             # je prends un noeud au hasard est je lui des troupes
                                             cible = board.find_node(random.choice(current_node.neighbor))
-                                            order(parse.ordre_builder(board.uid, 100, current_node.id, cible.id))
+                                            order(parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], cible), board.liste_node[i].id, cible.id))
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode, board.nb_node))
-            if (nb_mynode == len(board.liste_node)):
-                print('we think that we won')
-                break
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order('[{}]GAMEOVEROK'.format(board.uid))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))
@@ -101,7 +98,7 @@ def check_in(liste1, liste2):   # fonction qui verifie la présence d'un éléme
                 return True
     return False
 
-def max_renfort(source,cible):
+def max_renfort(source,cible):  # calcul le nombre d'unités à envoyer
     if cible.prod_off == 'I':
         return ((20-cible.offsize)*100)/source.offsize
     elif cible.prod_off == 'II':
