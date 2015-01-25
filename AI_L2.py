@@ -1,5 +1,5 @@
 # ---------fichier pour stocker l'IA L2
-# ---------véritable usine à gaz
+# ---------véritable violeuse
 import random
 from poooc import order, state, state_on_update, etime
 from class_plateau import *
