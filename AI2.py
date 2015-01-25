@@ -20,7 +20,7 @@ def register_pooo(uid):
 
 def init_pooo(init_string):
     # logging.info('[init_pooo] Game init: {!r}'.format(init_string))
-    parser.parser_init(str(init_string), board)
+    parser.parser_init(init_string, board)
     board.display()
     pass
 

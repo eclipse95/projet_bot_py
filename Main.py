@@ -1,16 +1,18 @@
 # ---------fichier pour stocker l'IA L1
 # envoi un nombre aléatoire d'unité offensive si un noeud atteint 10 unités offensive
 # ----------LIBS----------
-from class_plateau import *
-from poooc import order, state, state_on_update, etime
+from parser import *
 import parser
 import inspect
 import logging
 import random
+from class_plateau import *
+from poooc import order, state, state_on_update, etime
+
 
 global plateau              # les variables globales, ça craint
 board = plateau()                  # variable plateau
-
+global chain
 
 def register_pooo(uid):
     board.set_uid(uid)
@@ -22,19 +24,19 @@ def register_pooo(uid):
 
 def init_pooo(init_string):
     # logging.info('[init_pooo] Game init: {!r}'.format(init_string))
-    parser.parser_init(str(init_string), board)
-    board.display()
+    chain = init_string
     pass
 
 
 def play_pooo():
     logging.info('Entering play_pooo fonction from {} module...'.format(inspect.currentframe().f_back.f_code.co_filename))
-
+    parser.parser_init(chain, board)
+    board.display()
     while True:
         msg = state_on_update()
         if 'STATE' in msg:
             logging.debug('[play_pooo] Received state: {}'.format(msg))
-            parser.parser_state(msg, board)
+            parser_state(msg, board)
             board.display()
             nb_node = 0
             for i in range(board.nb_node):
@@ -42,7 +44,7 @@ def play_pooo():
                     nb_node += 1
                     if board.liste_node[i].offsize > 10:
                         target_id = random.choice(board.liste_node[i].neighbor)
-                        order(parser.ordre_builder(board.uid, random.randint(0, 100), board.liste_node[i].id, target_id))
+                        order(ordre_builder(board.uid, random.randint(0, 100), board.liste_node[i].id, target_id))
             logging.info('============ ( {} / {} ) ============='.format(nb_node, board.nb_node))
 
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
