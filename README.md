@@ -14,4 +14,4 @@ Dépendances minimales:
  class_node.py
  class_plateau.py
  parse.py
-(pooobot)
+(pooobot.py)
