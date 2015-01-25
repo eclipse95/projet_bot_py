@@ -98,7 +98,7 @@ def check_in(liste1, liste2):   # fonction qui verifie la présence d'un éléme
                 return True
     return False
 
-def max_renfort(source,cible):  # calcul le nombre d'unités à envoyer
+def max_renfort(source,cible):  # optimise le nombre d'unités de renfort à envoyer
     if cible.prod_off == 'I':
         return ((20-cible.offsize)*100)/source.offsize
     elif cible.prod_off == 'II':
