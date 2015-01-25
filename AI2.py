@@ -65,7 +65,6 @@ def play_pooo():
                         if troupe_a_envoyer < troupe_a_envoyer_min:
                             troupe_a_envoyer_min = troupe_a_envoyer
                             cible = cible_2         # la cible 2 devient la cible
-
                     if troupe_a_envoyer_min < source.offsize:     # Teste si on peut attaquer
                         ordre = parse.ordre_builder(board.uid, 100, source.id, cible.id)   # creer l'ordre
                         # crée l'ordre d'attaque
@@ -89,7 +88,12 @@ def play_pooo():
                             order(parse.ordre_builder(board.uid,(30-cible.offsize)*100/source.offsize, source.id, cible.id))
 
             logging.info('============ ( {} / {} ) ============='.format(len(liste_node_allie), board.nb_node))
-
+            if len(liste_node_allie) == 0:
+                print('we fail')
+                break
+            if len(liste_node_allie) == len(board.liste_node):
+                print('we win')
+                break
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order('[{}]GAMEOVEROK'.format(board.uid))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))

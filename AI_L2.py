@@ -38,7 +38,7 @@ def play_pooo():
             board.display()
             nb_mynode = 0
             for i in range(int(board.nb_node)):
-                if board.liste_node[i].owner == board.flag and board.liste_node[i].offsize > 0:   # si le noeud m'appartient
+                if board.liste_node[i].owner == board.flag:   # si le noeud m'appartient
                     nb_mynode += 1
                     if len(board.liste_node[i].neighbor) == 1 and board.liste_node[i].offsize > 0:
                         current_node = board.find_node(board.liste_node[i].neighbor[0])
@@ -62,6 +62,9 @@ def play_pooo():
                                         cible = board.find_node(random.choice(current_node.neighbor))
                                         order(parse.ordre_builder(board.uid, 100, current_node.id, cible.id))
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode, board.nb_node))
+            if (nb_mynode == len(board.liste_node)):
+                print('we think that we won')
+                break
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order('[{}]GAMEOVEROK'.format(board.uid))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))
