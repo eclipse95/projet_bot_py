@@ -3,7 +3,7 @@
 # ----------LIBS----------
 from class_plateau import *
 from poooc import order, state, state_on_update, etime
-import parser
+import parse
 import inspect
 import logging
 import random
@@ -20,7 +20,7 @@ def register_pooo(uid):
 
 def init_pooo(init_string):
     # logging.info('[init_pooo] Game init: {!r}'.format(init_string))
-    parser.parser_init(init_string, board)
+    parse.parser_init(init_string, board)
     board.display()
     pass
 
@@ -35,7 +35,7 @@ def play_pooo():
             liste_node_neutre = []
             liste_node_allie = []
             logging.debug('[play_pooo] Received state: {}'.format(msg))
-            parser.parser_state(msg, board)
+            parse.parser_state(msg, board)
             board.display()
             for i in range(board.nb_node):
                 if board.liste_node[i].owner == board.flag:
@@ -51,7 +51,7 @@ def play_pooo():
                         cible = board.find_node(source.neighbor[i])
                         if cible != board.flag and cible != -1:   # on trouve l'ennemi
                             if source.offsize > (cible.offsize + cible.defsize) or source.offsize == 30:
-                                order(parser.ordre_builder(board.uid, 100, source.id, cible.id))   # on l'attaque
+                                order(parse.ordre_builder(board.uid, 100, source.id, cible.id))   # on l'attaque
                 elif check_in(source.neighbor, liste_node_neutre) and source.offsize > 0:
                     # on peut mettre qu'une seule condition, l'autre est déjà testé
                     # Si les voisins sont neutres (ou allié)
@@ -67,7 +67,7 @@ def play_pooo():
                             cible = cible_2         # la cible 2 devient la cible
 
                     if troupe_a_envoyer_min < source.offsize:     # Teste si on peut attaquer
-                        ordre = parser.ordre_builder(board.uid, 100, source.id, cible.id)   # creer l'ordre
+                        ordre = parse.ordre_builder(board.uid, 100, source.id, cible.id)   # creer l'ordre
                         # crée l'ordre d'attaque
                         order(ordre)
                         # A l'ATTAQUE
@@ -75,18 +75,18 @@ def play_pooo():
                     # Si les voisins sont alliés
                     if len(source.neighbor) == 1:   # le noeud n'a qu'un voisin allié
                         cible = board.find_node(source.neighbor[0])
-                        order(parser.ordre_builder(board.uid,(30-cible.offsize)*100/source.offsize, source.id, cible.id))
+                        order(parse.ordre_builder(board.uid,(30-cible.offsize)*100/source.offsize, source.id, cible.id))
                     else:
                         for b in range(len(source.neighbor)):   # On parcourt ses voisins
                             source_2 = source.neighbor[b]
                             if check_in(source_2.neighbor,liste_node_ennemi) or check_in(source_2,liste_node_neutre):
                                 # on envoie des renforts
                                 if source.offsize != 0:
-                                    order(parser.ordre_builder(board.uid,(30-source_2.offsize)*100/source.offsize, source.id, source_2.id))
+                                    order(parse.ordre_builder(board.uid,(30-source_2.offsize)*100/source.offsize, source.id, source_2.id))
                                     pass
                         if source.offsize != 0:
                             cible = board.find_node(random.choice(source.neighbor))
-                            order(parser.ordre_builder(board.uid,(30-cible.offsize)*100/source.offsize, source.id, cible.id))
+                            order(parse.ordre_builder(board.uid,(30-cible.offsize)*100/source.offsize, source.id, cible.id))
 
             logging.info('============ ( {} / {} ) ============='.format(len(liste_node_allie), board.nb_node))
 
