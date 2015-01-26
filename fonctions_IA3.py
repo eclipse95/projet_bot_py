@@ -70,7 +70,7 @@ def de_quel_cote_aller(plateau,nos_noeuds):
     for i in range(len(nos_noeuds)):
         if len(nos_noeuds[i].neighbor) == 2:#si j'ai deux voisins
             if nos_noeuds[i].neighbor[0].owner == plateau.flag:#si le 1er voisin est a moi
-                if nos_noeuds[i].neighbor[1].owner == plateau.flag:   #si le second est aussi a moi                 
+                if nos_noeuds[i].neighbor[1].owner == plateau.flag:   #si le second est aussi a moi
                     if regarder_dans_chaine(plateau,nos_noeuds[i].neighbor[0]):#regarder si j'envoie vers le 1er voisin
                         print('ORDRE DU TYPE DE QUEL COTE ALLER')
                         return creation_attaque(nos_noeuds[i].id,nos_noeuds[i].neighbor[0].id,100,plateau.uid)

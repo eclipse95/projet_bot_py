@@ -11,7 +11,7 @@ def parser_init(chain, board):                     # parser chaine init
     board.flag = int(res.group(3))
     board.speed = int(res.group(4))
     board.nb_node = int(res.group(5))
-    res1 = findall("(\d+)\((-\d+|\d+),(-\d+|\d+)\)'(\d+)'(\d+)'(\d+)'(\w*)", chain)     # parse les noeuds
+    res1 = findall("(\d+)\((-\d+|\d+),(-\d+|\d+)\)'\d+'(\d+)'(\d+)'(\w*)", chain)     # parse les noeuds
     nb_aretes = int(search(";(\d+)LINES:", chain).group(1))
     res = findall("(\d+)@(\d+)OF(\d+)", chain)           # parse les aretes (n° noeud, distance, n° noeud suivant)
     board.liste_node = []
@@ -19,10 +19,9 @@ def parser_init(chain, board):                     # parser chaine init
         id = int(res1[i][0])
         xpos = int(res1[i][1])                           # inutilisé
         ypos = int(res1[i][2])                           # inutilisé
-        radius = int(res1[i][3])                         # inutilisé
-        offsize = int(res1[i][4])
-        defsize = int(res1[i][5])
-        prod = str(res1[i][6])
+        offsize = int(res1[i][3])
+        defsize = int(res1[i][4])
+        prod = str(res1[i][5])
         ls_aretes = []                                 # remise à zero de la liste de voisins
         for j in range(nb_aretes):                     # création du voisinage
             if id == int(res[j][0]):                   # A->B
@@ -31,7 +30,7 @@ def parser_init(chain, board):                     # parser chaine init
             elif id == int(res[j][2]):                 # B->A
                 # ls_aretes.append([res[j][0],res[j][1]])
                 ls_aretes.append(int(res[j][0]))       # stocke les ID
-        board.liste_node.append(node(id, 0, radius, [xpos, ypos], offsize, defsize, prod, ls_aretes))    # liste de noeud
+        board.liste_node.append(node(id, 0, [xpos, ypos], offsize, defsize, prod, ls_aretes))    # liste de noeud
     return board
 
 

@@ -45,7 +45,7 @@ def play_pooo():
             for i in range(int(board.nb_node)):     # examine tous les noeuds
                 if board.liste_node[i].owner == board.flag:   # si le noeud m'appartient
                     nb_mynode += 1
-                    b_attaque = False   # témoin d'attque
+                    b_attaque = False   # témoin d'attaque
                     if len(board.liste_node[i].neighbor) == 1 and board.liste_node[i].offsize > 0:
                         # si le noeud n'a qu'un voisin
                         current_node = board.find_node(board.liste_node[i].neighbor[0])
@@ -59,27 +59,21 @@ def play_pooo():
                             current_node = board.find_node(j)
                             if current_node.owner != board.flag and check_in([current_node.id], target_list):
                                 # si un de ses voisins est un ennemi et fait partie de la liste prioritaire
+                                b_attaque = True
                                 if board.liste_node[i].offsize > (current_node.offsize + current_node.defsize):
                                     # si j'ai suffisament d'unité pour prendre le noeud
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
-                                    b_attaque = True
                                 elif (board.liste_node[i].offsize == 20 and board.liste_node[i].prod_off == 'I') or (board.liste_node[i].offsize == 30 and board.liste_node[i].prod_off == 'II') or (board.liste_node[i].offsize == 40 and board.liste_node[i].prod_off == 'III'):
                                     # si le noeud est plein
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
-                                    b_attaque = True
-                                else:
-                                    b_attaque = True
                             elif current_node.owner != board.flag:    # si un de ses voisins est un ennemi ou neutre
+                                b_attaque = True
                                 if board.liste_node[i].offsize > (current_node.offsize + current_node.defsize):
                                     # si j'ai suffisament d'unité pour prendre le noeud
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
-                                    b_attaque = True
                                 elif (board.liste_node[i].offsize == 20 and board.liste_node[i].prod_off == 'I') or (board.liste_node[i].offsize == 30 and board.liste_node[i].prod_off == 'II') or (board.liste_node[i].offsize == 40 and board.liste_node[i].prod_off == 'III'):
                                     # si le noeud est plein
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
-                                    b_attaque = True
-                                else:
-                                    b_attaque = True
                         if not b_attaque:    # pas encore déplacer d'unité et pas d'ennemi
                             for j in board.liste_node[i].neighbor:     # je regarde ses voisins
                                 current_node = board.find_node(j)
