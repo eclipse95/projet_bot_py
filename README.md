@@ -2,6 +2,7 @@ projet_bot_py
 =============
 
 projet creation d'un bot pour LSLW(2) réalisé en Python 3.4.x
+branche personelle afin de créer l'ia ultime.
 
 Syntaxe: pooobot -b nom_IA nom_joueur
 
