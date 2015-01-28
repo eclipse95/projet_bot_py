@@ -1,5 +1,6 @@
-# ---------fichier pour stocker l'IA L2
+# ---------fichier pour stocker l'IA L2V2
 # --------- niveau standard
+# passage par reference[ok]
 
 # Libs
 import random
@@ -29,6 +30,10 @@ def init_pooo(init_string):
     for i in range(len(board.liste_node)):          # determine les noeuds prioritaires
         if board.liste_node[i].prod_off == 'II' or board.liste_node[i].prod_off == 'III':
             target_list.append(board.liste_node[i].id)
+        tmp_ls = []
+        for j in board.liste_node[i].neighbor:
+            tmp_ls.append(board.find_node(board.liste_node[i].neighbor[j]))
+        board.liste_node.neighbor = tmp_ls
     pass
 
 
@@ -48,7 +53,7 @@ def play_pooo():
                     b_attaque = False   # témoin d'attaque
                     if len(board.liste_node[i].neighbor) == 1 and board.liste_node[i].offsize > 0:
                         # si le noeud n'a qu'un voisin
-                        current_node = board.find_node(board.liste_node[i].neighbor[0])
+                        current_node = board.liste_node[i].neighbor[0]
                         if current_node != board.flag:
                             order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                         elif (current_node.offsize < 20 and current_node.prod_off == 'I') or \
@@ -59,7 +64,7 @@ def play_pooo():
                                                       board.liste_node[i].id, current_node.id))
                     elif board.liste_node[i].offsize > 0:
                         for j in board.liste_node[i].neighbor:     # je regarde ses voisins
-                            current_node = board.find_node(j)
+                            current_node = board.liste_node[i].neighbor[j]
                             if current_node.owner != board.flag and check_in([current_node.id], target_list):
                                 # si un de ses voisins est un ennemi et fait partie de la liste prioritaire
                                 b_attaque = True
@@ -83,7 +88,7 @@ def play_pooo():
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                         if not b_attaque:    # pas encore déplacer d'unité et pas d'ennemi
                             for j in board.liste_node[i].neighbor:     # je regarde ses voisins
-                                current_node = board.find_node(j)
+                                current_node = board.liste_node[i].neighbor[j]
                                 if current_node.owner == board.flag:  # si ses voisins sont alliés
                                     for k in current_node.neighbor:     # je regarde leur voisins
                                         current_node_k = board.find_node(k)

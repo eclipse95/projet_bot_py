@@ -1,10 +1,9 @@
 
 
 class plateau():
-    def __init__(self, uid=-1, nb_player=-1, nb_node=-1, ls_node=[], flag=-1, speed=1, matchid=0):
+    def __init__(self, uid=-1, nb_player=-1, nb_node=-1, ls_node=[], flag=-1, speed=1):
         self.uid = uid                  # UID du bot
         self.flag = flag                # couleur joueur
-        self.matchid = matchid          # matchID   # inutilisé
         self.nb_node = nb_node          # nb de noeud
         self.liste_node = ls_node       # liste contenant les noeuds
         self.nb_player = nb_player      # nb de joueur
@@ -22,7 +21,7 @@ class plateau():
         self.liste_node.append(node)
 
     def display(self):           # méthode d'affichage
-        print('uid: ', self.uid, '; match ID: ', self.matchid, '; flag: ', self.flag, '; vitesse:', self.speed)
+        print('uid: ', self.uid, '; flag: ', self.flag, '; vitesse:', self.speed)
         for i in range(len(self.liste_node)):
             self.liste_node[i].display()
 
