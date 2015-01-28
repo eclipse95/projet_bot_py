@@ -7,6 +7,7 @@ class node():
         self.defsize = defsize            # unité def
         self.prod_off = prod_off          # production offensive
         self.neighbor = ls_neighbor       # liste des noeuds voisins (ID)
+
     def update(self, owner, offsize, defsize):         # mise à jour du noeud
         self.owner = owner                # n° joueur
         self.offsize = offsize            # unité off
@@ -18,3 +19,9 @@ class node():
     def display(self):                  # fonction affichage
         print('id:', self.id, 'propriétaire:', self.owner, 'position:', self.pos, 'off:', self. offsize, 'def:', self.defsize)
         print('production:', self.prod_off, 'voisins :', self.neighbor)
+
+    def display_v2(self):                  # fonction affichage
+        print('id:', self.id, 'propriétaire:', self.owner, 'position:', self.pos, 'off:', self. offsize, 'def:', self.defsize)
+        print('production:', self.prod_off)
+        for i in range(len(self.neighbor)):
+            print('voisins: ',self.neighbor[i].id)

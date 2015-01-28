@@ -25,6 +25,11 @@ class plateau():
         for i in range(len(self.liste_node)):
             self.liste_node[i].display()
 
+    def display_v2(self):           # méthode d'affichage
+        print('uid: ', self.uid, '; flag: ', self.flag, '; vitesse:', self.speed)
+        for i in range(len(self.liste_node)):
+            self.liste_node[i].display_v2()
+
     def set_uid(self, uid):             # ajoute l'UID au plateau
         self.uid = uid
 
