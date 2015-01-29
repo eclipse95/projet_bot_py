@@ -52,9 +52,7 @@ def play_pooo():
                         current_node = board.find_node(board.liste_node[i].neighbor[0])
                         if current_node != board.flag:
                             order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
-                        elif (current_node.offsize < 20 and current_node.prod_off == 'I') or \
-                                (current_node.offsize < 30 and current_node.prod_off == 'II') or \
-                                (current_node.offsize < 40 and current_node.prod_off == 'III'):
+                        elif current_node.offsize != current_node.max_off:
                             # si le noeud voisin n'est pas plein
                             order(parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node),
                                                       board.liste_node[i].id, current_node.id))
@@ -68,9 +66,7 @@ def play_pooo():
                                 if board.liste_node[i].offsize > (current_node.offsize + current_node.defsize):
                                     # si j'ai suffisament d'unité pour prendre le noeud
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
-                                elif (board.liste_node[i].offsize >= 20 and board.liste_node[i].prod_off == 'I') or \
-                                        (board.liste_node[i].offsize >= 30 and board.liste_node[i].prod_off == 'II') or \
-                                        (board.liste_node[i].offsize >= 40 and board.liste_node[i].prod_off == 'III'):
+                                elif (board.liste_node[i].offsize == board.liste_node[i].max_off):
                                     # si le noeud est plein
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                             elif current_node.owner != board.flag:    # si un de ses voisins est un ennemi ou neutre
@@ -78,9 +74,7 @@ def play_pooo():
                                 if board.liste_node[i].offsize > (current_node.offsize + current_node.defsize):
                                     # si j'ai suffisament d'unité pour prendre le noeud
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
-                                elif (board.liste_node[i].offsize >= 20 and board.liste_node[i].prod_off == 'I') or \
-                                        (board.liste_node[i].offsize >= 30 and board.liste_node[i].prod_off == 'II') or\
-                                        (board.liste_node[i].offsize >= 40 and board.liste_node[i].prod_off == 'III'):
+                                elif board.liste_node[i].offsize == board.liste_node[i].max_off:
                                     # si le noeud est plein
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                         if not b_attaque:    # pas encore déplacer d'unité et pas d'ennemi
@@ -124,4 +118,8 @@ def check_in(liste1, liste2):   # fonction qui verifie la présence d'un éléme
 
 
 def max_renfort(source, cible):  # calcul le nombre d'unités à envoyer
-    return int(((cible.max_off-cible.offsize)*100)/source.offsize)
+    max_off = int(((cible.max_off-cible.offsize)*100)/source.offsize)
+    if max_off > 100:
+        return 100
+    else:
+        return max_off
