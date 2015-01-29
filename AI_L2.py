@@ -95,6 +95,8 @@ def play_pooo():
                                 order(parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], cible), board.liste_node[i].id, cible.id))
 
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode, board.nb_node))
+            if (nb_mynode == board.nb_node or nb_mynode == 0) and int((re.search('(\d+)MOV',msg)).group(1)) == 0:
+                break
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order('[{}]GAMEOVEROK'.format(board.uid))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))

@@ -9,7 +9,7 @@ from class_plateau import *
 import parse
 import inspect
 import logging
-
+import re
 
 global plateau              # les variables globales, ça craint
 global target_list
@@ -26,7 +26,7 @@ def register_pooo(uid):
 def init_pooo(init_string):
     logging.info('[init_pooo] Game init: {!r}'.format(init_string))
     parse.parser_init(init_string, board)           # parse INIT
-    board.display()                                 # affichage du plateau pour les tests
+    # board.display()                                 # affichage du plateau pour les tests
     for i in range(len(board.liste_node)):          # determine les noeuds prioritaires
         if board.liste_node[i].prod_off == 'II' or board.liste_node[i].prod_off == 'III':
             target_list.append(board.liste_node[i].id)
@@ -45,7 +45,7 @@ def play_pooo():
         if 'STATE' in msg:
             logging.debug('[play_pooo] Received state: {}'.format(msg))
             parse.parser_state(msg, board)          # parse la chaine STATE
-            board.display_v2()                         # affiche le plateau, pratique pour voir l'évolution du jeu
+            # board.display_v2()                         # affiche le plateau, pratique pour voir l'évolution du jeu
             nb_mynode = 0                           # compteur nombre de noeuds possedés
             for i in range(int(board.nb_node)):     # examine tous les noeuds
                 if board.liste_node[i].owner == board.flag:   # si le noeud m'appartient
@@ -116,6 +116,8 @@ def play_pooo():
                                     print(board.liste_node[i].id,' a aidé' ,cible.id,'avec' ,max_renfort(board.liste_node[i], cible), 'unités')
 
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode, board.nb_node))
+            if (nb_mynode == board.nb_node or nb_mynode == 0) and int((re.search('(\d+)MOV',msg)).group(1)) == 0:
+                break
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
             order('[{}]GAMEOVEROK'.format(board.uid))
             logging.debug('[play_pooo] Received game over: {}'.format(msg))
