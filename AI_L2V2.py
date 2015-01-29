@@ -64,8 +64,7 @@ def play_pooo():
                             order(parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node),
                                                       board.liste_node[i].id, current_node.id))
                     elif board.liste_node[i].offsize > 0:
-                        for j in range(len(board.liste_node[i].neighbor)):     # je regarde ses voisins
-                            current_node = board.liste_node[i].neighbor[j]
+                        for current_node in board.liste_node[i].neighbor:     # je regarde ses voisins
                             if current_node.owner != board.flag and check_in([current_node.id], target_list):
                                 # si un de ses voisins est un ennemi et fait partie de la liste prioritaire
                                 b_attaque = True
@@ -88,25 +87,20 @@ def play_pooo():
                                     # si le noeud est plein
                                     order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
                         if not b_attaque:    # pas encore déplacer d'unité et pas d'ennemi
-                            for j in range(len(board.liste_node[i].neighbor)):     # je regarde ses voisins
-                                current_node = board.liste_node[i].neighbor[j]
+                            for current_node in board.liste_node[i].neighbor:     # je regarde ses voisins
                                 if current_node.owner == board.flag:  # si ses voisins sont alliés
-                                    for k in range(len(current_node.neighbor)):     # je regarde leur voisins
-                                        current_node_k = current_node.neighbor[k]
+                                    for current_node_k in current_node.neighbor:     # je regarde leur voisins
                                         if current_node_k.owner != board.flag:  # si un des voisins est ennemi
                                             # j'envois des unités de renfort
                                             b_attaque = True
                                             move = parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node), board.liste_node[i].id, current_node.id)
                                             order(move)
                             if not b_attaque:
-                                for j in range(len(board.liste_node[i].neighbor)):     # je regarde ses voisins
-                                    current_node = board.liste_node[i].neighbor[j]
+                                for current_node in range(len(board.liste_node[i].neighbor)):     # je regarde ses voisins
                                     if current_node.owner == board.flag:  # si ses voisins sont alliés
-                                        current_node = board.liste_node[i].neighbor[j]
-                                        for k in range(len(current_node.neighbor)):     # je regarde leur voisins
-                                            current_node_k = current_node.neighbor[k]
-                                            for l in range(len(current_node_k.neighbor)):
-                                                if current_node_k.neighbor[l].owner != board.flag:
+                                        for current_node_k in current_node.neighbor:     # je regarde leur voisins
+                                            for current_node_l in current_node_k.neighbor:
+                                                if current_node_l.owner != board.flag:
                                                     # si un des voisins est ennemi  # j'envois des unités de renfort
                                                     move = parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node), board.liste_node[i].id, current_node.id)
                                                     order(move)
@@ -138,9 +132,4 @@ def check_in(liste1, liste2):   # fonction qui verifie la présence d'un éléme
 
 
 def max_renfort(source, cible):  # calcul le nombre d'unités à envoyer
-    if cible.prod_off == 'I':
-        return ((20-cible.offsize)*100)/source.offsize
-    elif cible.prod_off == 'II':
-        return ((30-cible.offsize)*100)/source.offsize
-    else:
-        return ((40-cible.offsize)*100)/source.offsize
+    return ((cible.max_off-cible.offsize)*100)/source.offsize

@@ -7,6 +7,7 @@ class node():
         self.defsize = defsize            # unité def
         self.prod_off = prod_off          # production offensive
         self.neighbor = ls_neighbor       # liste des noeuds voisins (ID)
+        self.max_off = offsize            # nombre max d'unité off
 
     def update(self, owner, offsize, defsize):         # mise à jour du noeud
         self.owner = owner                # n° joueur
