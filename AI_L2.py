@@ -48,6 +48,7 @@ def play_pooo():
                     b_attaque = False   # témoin d'attaque
                     if len(board.liste_node[i].neighbor) == 1 and board.liste_node[i].offsize > 0:
                         # si le noeud n'a qu'un voisin
+                        b_attaque = True
                         current_node = board.find_node(board.liste_node[i].neighbor[0])
                         if current_node != board.flag:
                             order(parse.ordre_builder(board.uid, 100, board.liste_node[i].id, current_node.id))
@@ -57,6 +58,7 @@ def play_pooo():
                             # si le noeud voisin n'est pas plein
                             order(parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node),
                                                       board.liste_node[i].id, current_node.id))
+                            print(board.liste_node[i].id,' a aidé' ,current_node.id,'avec' ,max_renfort(board.liste_node[i], current_node), 'unités')
                     elif board.liste_node[i].offsize > 0:
                         for j in board.liste_node[i].neighbor:     # je regarde ses voisins
                             current_node = board.find_node(j)
@@ -92,6 +94,7 @@ def play_pooo():
                                             b_attaque = True
                                             move = parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node), board.liste_node[i].id, current_node.id)
                                             order(move)
+                                            print(board.liste_node[i].id,' a aidé' ,current_node.id,'avec' ,max_renfort(board.liste_node[i], current_node), 'unités')
                             if not b_attaque:
                                 # je prends un noeud au hasard est je lui des troupes
                                 cible = board.find_node(random.choice(board.liste_node[i].neighbor))
@@ -121,9 +124,4 @@ def check_in(liste1, liste2):   # fonction qui verifie la présence d'un éléme
 
 
 def max_renfort(source, cible):  # calcul le nombre d'unités à envoyer
-    if cible.prod_off == 'I':
-        return ((20-cible.offsize)*100)/source.offsize
-    elif cible.prod_off == 'II':
-        return ((30-cible.offsize)*100)/source.offsize
-    else:
-        return ((40-cible.offsize)*100)/source.offsize
+    return int(((cible.max_off-cible.offsize)*100)/source.offsize)

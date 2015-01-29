@@ -86,28 +86,33 @@ def play_pooo():
                                     # si le noeud voisin n'est pas plein
                                     order(parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node),
                                                               board.liste_node[i].id, current_node.id))
+                                    print(board.liste_node[i].id,' a aidé' ,current_node.id,'avec' ,max_renfort(board.liste_node[i], current_node), 'unités')
                             for current_node in board.liste_node[i].neighbor:     # je regarde ses voisins
                                 if current_node.owner == board.flag:  # si ses voisins sont alliés
                                     for current_node_k in current_node.neighbor:     # je regarde leur voisins
                                         if current_node_k.owner != board.flag:  # si un des voisins est ennemi
                                             # j'envois des unités de renfort
-                                            b_attaque = True
                                             move = parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node), board.liste_node[i].id, current_node.id)
                                             order(move)
+                                            print(board.liste_node[i].id,' a aidé' ,current_node.id,'avec' ,max_renfort(board.liste_node[i], current_node), 'unités')
+                                            b_attaque = True
                             if not b_attaque:
-                                for current_node in range(len(board.liste_node[i].neighbor)):   # je regarde ses voisins
+                                for current_node in board.liste_node[i].neighbor:   # je regarde ses voisins
                                     if current_node.owner == board.flag:  # si ses voisins sont alliés
                                         for current_node_k in current_node.neighbor:     # je regarde leur voisins
-                                            for current_node_l in current_node_k.neighbor:
-                                                if current_node_l.owner != board.flag:
-                                                    # si un des voisins est ennemi  # j'envois des unités de renfort
-                                                    move = parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node), board.liste_node[i].id, current_node.id)
-                                                    order(move)
-                                                    b_attaque = True
+                                            if current_node_k.owner == board.flag:
+                                                for current_node_l in current_node_k.neighbor:
+                                                    if current_node_l.owner != board.flag:
+                                                        # si un des voisins est ennemi  # j'envois des unités de renfort
+                                                        move = parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], current_node), board.liste_node[i].id, current_node.id)
+                                                        order(move)
+                                                        b_attaque = True
+                                                        print(board.liste_node[i].id,' a aidé' ,current_node.id,'avec' ,max_renfort(board.liste_node[i], current_node), 'unités')
                                 if not b_attaque:
                                     # je prends un noeud au hasard est je lui des troupes
                                     cible = board.liste_node[i].neighbor[random.randint(0, len((board.liste_node[i].neighbor)))-1]
                                     order(parse.ordre_builder(board.uid, max_renfort(board.liste_node[i], cible), board.liste_node[i].id, cible.id))
+                                    print(board.liste_node[i].id,' a aidé' ,cible.id,'avec' ,max_renfort(board.liste_node[i], cible), 'unités')
 
             logging.info('============ ( {} / {} ) ============='.format(nb_mynode, board.nb_node))
         elif 'GAMEOVER' in msg:      # on arrête d'envoyer des ordres. On observe seulement...
@@ -131,4 +136,8 @@ def check_in(liste1, liste2):   # fonction qui verifie la présence d'un éléme
 
 
 def max_renfort(source, cible):  # calcul le nombre d'unités à envoyer
-    return ((cible.max_off-cible.offsize)*100)/source.offsize
+    max_off = int(((cible.max_off-cible.offsize))/source.offsize)*100
+    if max_off > 100:
+        return 100
+    else:
+        return max_off
